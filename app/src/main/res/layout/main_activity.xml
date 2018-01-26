@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/horizontal_padding">
+
+    <Button
+        android:id="@+id/my_tutor"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_above="@+id/dictionary"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/horizontal_padding"
+        android:background="@drawable/button_background"
+        android:text="My Tutor"
+        android:textColor="@color/button_text_color" />
+
+    <Button
+        android:id="@+id/dictionary"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/button_background"
+        android:text="Dictionary"
+        android:textColor="@color/button_text_color" />
+
+    <Button
+        android:id="@+id/books"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_below="@+id/dictionary"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/horizontal_padding"
+        android:background="@drawable/button_background"
+        android:text="Books"
+        android:textColor="@color/button_text_color" />
+
+</RelativeLayout>
