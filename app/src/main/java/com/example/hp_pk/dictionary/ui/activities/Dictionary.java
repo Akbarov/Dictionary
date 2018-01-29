@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -26,9 +29,6 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,9 +39,7 @@ import butterknife.OnClick;
 
 public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
 
-    enum LANGUAGE{
-        ENGLISH,UZBEK
-    }
+    private DatabaseAccess access;
 
     @InjectPresenter
     DictionaryPresenter presenter;
@@ -54,6 +52,20 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
 
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
+
+    @BindView(R.id.search_edit_text)
+    EditText searchText;
+
+    @BindView(R.id.clear_btn)
+    ImageView clearBtn;
+
+    @BindView(R.id.from_language)
+    TextView fromLanguage;
+
+    @BindView(R.id.to_language)
+    TextView toLanguage;
+
+    boolean isUzbek = false;
 
     private RecyclerArrayAdapter<WordClass> adapter;
 
@@ -75,24 +87,9 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
         DividerDecoration itemDecoration = new DividerDecoration(Color.GRAY, 2, 0, 0);
         itemDecoration.setDrawLastItem(false);
         recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapterWithProgress(adapter = new RecyclerArrayAdapter<WordClass>(this) {
-            @Override
-            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new WordViewHolder(parent);
-            }
-        });
+        recyclerView.setAdapterWithProgress(presenter.getAdapter(this));
+        presenter.setUpSearchView(searchText);
 
-        DatabaseAccess access = DatabaseAccess.getInstance(this);
-        access.open();
-
-        adapter.addAll(access.getWords(1));
-        access.close();
-        adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Log.d("sss", position + "");
-            }
-        });
     }
 
     @Override
@@ -120,7 +117,7 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
 
     }
 
-    @OnClick(value = {R.id.favorite, R.id.history,R.id.switch_language})
+    @OnClick(value = {R.id.favorite, R.id.history, R.id.switch_language})
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.favorite:
@@ -130,7 +127,10 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
                 presenter.historyPressed();
                 break;
             case R.id.switch_language:
-
+                String flag = fromLanguage.getText().toString();
+                fromLanguage.setText(toLanguage.getText().toString());
+                toLanguage.setText(flag);
+                presenter.switchLanguage();
         }
     }
 }

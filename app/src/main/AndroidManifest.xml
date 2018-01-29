@@ -22,6 +22,9 @@
         <activity
             android:name=".ui.activities.Dictionary"
             android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".ui.activities.MyTutor"
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>

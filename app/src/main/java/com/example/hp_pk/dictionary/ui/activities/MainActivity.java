@@ -47,7 +47,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void myTutorButtonClicked() {
-
+        MyTutor.start(this);
     }
 
     @Override

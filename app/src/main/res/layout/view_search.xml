@@ -42,7 +42,7 @@
             tools:targetApi="jelly_bean" />
 
         <ImageView
-            android:id="@+id/close_btn"
+            android:id="@+id/clear_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/icon"
