@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -16,6 +18,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.WordClass;
 import com.example.hp_pk.dictionary.holder.WordViewHolder;
+import com.example.hp_pk.dictionary.manager.DatabaseAccess;
 import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;
 import com.example.hp_pk.dictionary.presentation.view.DictionaryView;
 import com.jude.easyrecyclerview.EasyRecyclerView;
@@ -36,11 +39,18 @@ import butterknife.OnClick;
 
 public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
 
+    enum LANGUAGE{
+        ENGLISH,UZBEK
+    }
+
     @InjectPresenter
     DictionaryPresenter presenter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.switch_language)
+    LinearLayout switchLanguage;
 
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
@@ -72,15 +82,15 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
             }
         });
 
-        final List<WordClass> listWord = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            listWord.add(new WordClass(i, "Apple  " + (i + 1), 0, i % 3 == 1 ? true : false));
-        }
-        adapter.addAll(listWord);
+        DatabaseAccess access = DatabaseAccess.getInstance(this);
+        access.open();
+
+        adapter.addAll(access.getWords(1));
+        access.close();
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(Dictionary.this, listWord.get(position).getWord(), Toast.LENGTH_SHORT).show();
+                Log.d("sss", position + "");
             }
         });
     }
@@ -110,7 +120,7 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
 
     }
 
-    @OnClick(value = {R.id.favorite, R.id.history})
+    @OnClick(value = {R.id.favorite, R.id.history,R.id.switch_language})
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.favorite:
@@ -119,6 +129,8 @@ public class Dictionary extends MvpAppCompatActivity implements DictionaryView {
             case R.id.history:
                 presenter.historyPressed();
                 break;
+            case R.id.switch_language:
+
         }
     }
 }
