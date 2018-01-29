@@ -6,18 +6,38 @@ package com.example.hp_pk.dictionary;
 
 public class WordClass {
     private int id;
+    private int type;
     private String word;
+    private String meaning;
     private long usedDate;
     private boolean isFavorite;
 
     public WordClass() {
     }
 
-    public WordClass(int id, String word, long usedDate, boolean isFavorite) {
+    public WordClass(int id, int type, String word, String meaning, long usedDate, boolean isFavorite) {
         this.id = id;
+        this.type = type;
         this.word = word;
+        this.meaning = meaning;
         this.usedDate = usedDate;
         this.isFavorite = isFavorite;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
     }
 
     public int getId() {

@@ -7,6 +7,8 @@
 
     <include layout="@layout/toolbar_view" />
 
+    <include layout="@layout/view_search" />
+
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
