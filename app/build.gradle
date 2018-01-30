@@ -14,6 +14,7 @@ def rx_droid = "1.2.1"
 def chuck = "1.1.0"
 def easy = "4.4.2"
 def searchView = "1.4.0"
+def pdf = "3.0.0-beta.5"
 
 
 android {
@@ -91,5 +92,7 @@ dependencies {
     implementation "com.miguelcatalan:materialsearchview:$searchView"
 
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+
+    implementation "com.github.barteksc:android-pdf-viewer:$pdf"
 
 }

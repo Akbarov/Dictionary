@@ -15,37 +15,41 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_background"
-            android:text="Dictionary"
             android:layout_marginBottom="@dimen/dictionary_row_padding"
+            android:background="@drawable/button_background"
+            android:text="Mathematics"
             android:textColor="@color/button_text_color" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_background"
-            android:text="Dictionary"
             android:layout_marginBottom="@dimen/dictionary_row_padding"
+            android:background="@drawable/button_background"
+            android:text="English"
             android:textColor="@color/button_text_color" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_background"
-            android:text="Dictionary"
             android:layout_marginBottom="@dimen/dictionary_row_padding"
+            android:background="@drawable/button_background"
+            android:text="Biology"
             android:textColor="@color/button_text_color" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_background"
-            android:text="Dictionary"
             android:layout_marginBottom="@dimen/dictionary_row_padding"
+            android:background="@drawable/button_background"
+            android:text="History"
             android:textColor="@color/button_text_color" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="@drawable/button_background"
-            android:text="Dictionary"
             android:layout_marginBottom="@dimen/dictionary_row_padding"
+            android:background="@drawable/button_background"
+            android:text="Chemistry"
             android:textColor="@color/button_text_color" />
     </LinearLayout>
 

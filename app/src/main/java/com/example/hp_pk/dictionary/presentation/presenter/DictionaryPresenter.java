@@ -11,16 +11,19 @@ import android.widget.ImageView;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.WordClass;
 import com.example.hp_pk.dictionary.holder.WordViewHolder;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 import com.example.hp_pk.dictionary.manager.DatabaseAccess;
+import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.view.DictionaryView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
-import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by root on 1/25/18.
@@ -29,12 +32,14 @@ import java.util.List;
 public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
 
     private DictionaryView stateView;
-    private boolean isFavoriteSelected = false;
     private RecyclerArrayAdapter<WordClass> adapter;
     private DatabaseAccess access;
-    boolean isUzbek = false;
+    private int offset = 0;
+    @Inject
+    PrefManager prefManager;
 
     public DictionaryPresenter() {
+        Dictionary.getAppComponent().inject(this);
         stateView = getViewState();
     }
 
@@ -52,19 +57,19 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
                 Log.d("sss", position + "");
             }
         });
+        adapter.notifyDataSetChanged();
         adapter.setOnItemClickListener(listener);
         setDatabaseAccess(context);
-        setAllWords(1);
+        setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
         return adapter;
     }
 
-    private void setAllWords(int type) {
-        access.open();
+    private void setAllWords(int type, boolean isFavorite, int offset) {
         adapter.clear();
-        adapter.addAll(access.getWords(type));
+        adapter.addAll(access.getWords(type, isFavorite, offset));
     }
 
-    private void setAllWordsWithFilter(int type, String filter) {
+    private void setAllWordsWithFilter(int type, boolean isFavorite, String filter) {
         adapter.clear();
         adapter.addAll(access.getWordsWithFilter(type, filter));
     }
@@ -77,6 +82,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
 
     private void setDatabaseAccess(Context context) {
         access = DatabaseAccess.getInstance(context);
+        access.open();
     }
 
     public void backPressed() {
@@ -85,8 +91,9 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
 
     public void favoritePressed(View view) {
         stateView.favoriteButtonPressed();
-        ((ImageView) view).setImageResource(isFavoriteSelected ? R.drawable.ic_star_half_24dp : R.drawable.ic_star_24dp);
-        isFavoriteSelected = !isFavoriteSelected;
+        ((ImageView) view).setImageResource(!prefManager.isFavorite() ? R.drawable.ic_star_half_24dp : R.drawable.ic_star_24dp);
+        prefManager.setFavorite(!prefManager.isFavorite());
+        setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
     }
 
     public void historyPressed() {
@@ -103,9 +110,9 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
-                    setAllWords(1);
+                    setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
                 } else
-                    setAllWordsWithFilter(1, charSequence.toString());
+                    setAllWordsWithFilter(prefManager.getLanguageType(), prefManager.isFavorite(), charSequence.toString());
             }
 
             @Override
@@ -116,9 +123,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
     }
 
     public void switchLanguage() {
-        isUzbek = !isUzbek;
         adapter.clear();
-        adapter.addAll(access.getWords(isUzbek ? 1 : 0));
-
+        adapter.addAll(access.getWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset));
     }
 }

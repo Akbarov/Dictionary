@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hp_pk.dictionary">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".Dictionary"
         android:allowBackup="true"
@@ -20,11 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.Dictionary"
+            android:name=".ui.activities.DictionaryActivity"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".ui.activities.MyTutor"
             android:theme="@style/NoActionBar" />
+
+        <activity android:name=".ui.activities.BooksActivity" />
     </application>
 
 </manifest>

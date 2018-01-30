@@ -63,9 +63,13 @@ public class DatabaseAccess {
      *
      * @return a List of words
      */
-    public List<WordClass> getWords(int type) {
+    public List<WordClass> getWords(int type, boolean isFavorites, int offset) {
         List<WordClass> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM words where type =? order by word ASC limit 2", new String[]{String.valueOf(type)});
+        Cursor cursor;
+        if (isFavorites) {
+            cursor = database.rawQuery("SELECT * FROM words where type =? and is_favorite =? order by word ASC limit 50 offset ?", new String[]{String.valueOf(type), String.valueOf(1), String.valueOf(offset)});
+        } else
+            cursor = database.rawQuery("SELECT * FROM words where type =? order by word ASC limit 50 offset ?", new String[]{String.valueOf(type), String.valueOf(offset)});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(new WordClass(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getLong(4), cursor.getInt(5) == 1));
@@ -77,7 +81,7 @@ public class DatabaseAccess {
 
     public List<WordClass> getWordsWithFilter(int type, String filter) {
         List<WordClass> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM words where type =? and word like ? order by word ASC limit 1", new String[]{String.valueOf(type), "%" + filter + "%"});
+        Cursor cursor = database.rawQuery("SELECT * FROM words where type =? and word like ? order by word ASC", new String[]{String.valueOf(type), "%" + filter + "%"});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(new WordClass(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getLong(4), cursor.getInt(5) == 1));

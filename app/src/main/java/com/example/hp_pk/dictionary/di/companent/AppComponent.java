@@ -2,7 +2,9 @@ package com.example.hp_pk.dictionary.di.companent;
 
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.di.modul.AppModule;
+import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MainPresenter;
+import com.example.hp_pk.dictionary.ui.activities.DictionaryActivity;
 
 import javax.inject.Singleton;
 
@@ -18,9 +20,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(modules = {AndroidSupportInjectionModule.class, AppModule.class})
 public interface AppComponent {
 
-    void inject(Dictionary dictionary);
+    void inject(DictionaryActivity dictionary);
 
     void inject(MainPresenter mainPresenter);
+
+    void inject(DictionaryPresenter presenter);
+
+    void inject(Dictionary dictionary);
 
     @Component.Builder
     interface Builder {

@@ -17,7 +17,7 @@ public class ItemClickListener implements RecyclerArrayAdapter.OnItemClickListen
 
     @Override
     public void onItemClick(int position) {
-        if (listener == null) {
+        if (listener != null) {
             listener.clicked(position);
         }
     }
