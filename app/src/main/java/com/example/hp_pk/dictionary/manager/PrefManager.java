@@ -39,4 +39,15 @@ public class PrefManager implements Constants {
     public boolean isFavorite() {
         return prefsHelper.get(FAVORITE, false);
     }
+
+
+    public void setHistory(boolean isLastWordsShown) {
+        prefsHelper.put(FAVORITE, isLastWordsShown);
+    }
+
+    public boolean isLastWordsShown() {
+        return prefsHelper.get(FAVORITE, false);
+    }
+
+
 }

@@ -9,5 +9,12 @@ public interface Constants {
 
     String LANGUAGE = "language";
     String FAVORITE = "favorite";
+    String WORDS_TABLE_NAME = "words";
+    String WORD_ID = "id";
+    String WORD_TYPE = "type";
+    String WORD_NAME = "word";
+    String WORD_MEANING = "meaning";
+    String WORD_LAST_USED_DATE = "used_date";
+    String WORD_IS_FAVORITE = "is_favorite";
 
 }

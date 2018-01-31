@@ -23,6 +23,10 @@ import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.inject.Inject;
 
 /**
@@ -49,18 +53,23 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 return new WordViewHolder(parent);
             }
-
         };
         ItemClickListener listener = new ItemClickListener(new ItemClickListener.ItemClickedListener() {
             @Override
             public void clicked(int position) {
                 Log.d("sss", position + "");
+                WordClass wordClass = adapter.getItem(position);
+                if (wordClass != null) {
+                    access.updateLastUsedDate(wordClass.getId());
+                    //show meaning here
+                }
+
             }
         });
-        adapter.notifyDataSetChanged();
         adapter.setOnItemClickListener(listener);
         setDatabaseAccess(context);
         setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
+        stateView.switchTitleLanguage(prefManager.getLanguageType());
         return adapter;
     }
 
@@ -89,41 +98,56 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
         stateView.backButtonPressed();
     }
 
-    public void favoritePressed(View view) {
-        stateView.favoriteButtonPressed();
-        ((ImageView) view).setImageResource(!prefManager.isFavorite() ? R.drawable.ic_star_half_24dp : R.drawable.ic_star_24dp);
+    public void favoritePressed() {
         prefManager.setFavorite(!prefManager.isFavorite());
+        stateView.favoriteButtonPressed(prefManager.isFavorite());
         setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
     }
 
     public void historyPressed() {
-        stateView.historyButtonPressed();
+        prefManager.setHistory(!prefManager.isLastWordsShown());
+        stateView.historyButtonPressed(prefManager.isLastWordsShown());
+        prefManager.setFavorite(!prefManager.isFavorite());
+        stateView.favoriteButtonPressed(prefManager.isFavorite());
+        adapter.clear();
+        adapter.addAll(access.getLastWords(prefManager.getLanguageType()));
     }
 
     public void setUpSearchView(EditText searchText) {
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
-                    setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
-                } else
+                    //setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
+                    stateView.showHideClearButton(true);
+                } else {
                     setAllWordsWithFilter(prefManager.getLanguageType(), prefManager.isFavorite(), charSequence.toString());
+                    stateView.showHideClearButton(false);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
     }
 
+    private void switchTitleLanguage() {
+        stateView.switchTitleLanguage(prefManager.getLanguageType());
+    }
+
     public void switchLanguage() {
-        adapter.clear();
-        adapter.addAll(access.getWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset));
+        prefManager.setLanguageType(prefManager.getLanguageType() == 1 ? 0 : 1);
+        setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
+        switchTitleLanguage();
+    }
+
+    public void clearButtonPressed() {
+        offset = 0;
+        setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
     }
 }

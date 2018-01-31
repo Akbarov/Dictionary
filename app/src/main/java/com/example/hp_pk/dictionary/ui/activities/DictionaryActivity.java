@@ -65,6 +65,12 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
     @BindView(R.id.to_language)
     TextView toLanguage;
 
+    @BindView(R.id.favorite)
+    ImageView favoriteIcon;
+
+    @BindView(R.id.history)
+    ImageView historyIcon;
+
     @Inject
     PrefManager prefManager;
 
@@ -91,7 +97,6 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
         recyclerView.addItemDecoration(itemDecoration);
         recyclerView.setAdapterWithProgress(presenter.getAdapter(this));
         presenter.setUpSearchView(searchText);
-        changeTitleText();
 
     }
 
@@ -111,33 +116,19 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
     }
 
     @Override
-    public void favoriteButtonPressed() {
+    public void favoriteButtonPressed(boolean isFavoritesShown) {
         Toast.makeText(this, "Pressed", Toast.LENGTH_SHORT).show();
+        favoriteIcon.setImageResource(!prefManager.isFavorite() ? R.drawable.ic_star_half_24dp : R.drawable.ic_star_24dp);
     }
 
     @Override
-    public void historyButtonPressed() {
-
+    public void historyButtonPressed(boolean isLastWordsShown) {
+        //history icon changes
     }
 
-    @OnClick(value = {R.id.favorite, R.id.history, R.id.switch_language})
-    public void onClicked(View view) {
-        switch (view.getId()) {
-            case R.id.favorite:
-                presenter.favoritePressed(view);
-                break;
-            case R.id.history:
-                presenter.historyPressed();
-                break;
-            case R.id.switch_language:
-                prefManager.setLanguageType(prefManager.getLanguageType() == 1 ? 0 : 1);
-                changeTitleText();
-                presenter.switchLanguage();
-        }
-    }
-
-    private void changeTitleText() {
-        int type = prefManager.getLanguageType();
+    @Override
+    public void switchTitleLanguage(int type) {
+        searchText.setText("");
         if (type == 1) {
             fromLanguage.setText(R.string.english_short);
             toLanguage.setText(R.string.uzbek_short);
@@ -146,4 +137,28 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
             toLanguage.setText(R.string.english_short);
         }
     }
+
+    @Override
+    public void showHideClearButton(boolean hide) {
+        clearBtn.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @OnClick(value = {R.id.favorite, R.id.history, R.id.switch_language, R.id.clear_btn})
+    public void onClicked(View view) {
+        switch (view.getId()) {
+            case R.id.favorite:
+                presenter.favoritePressed();
+                break;
+            case R.id.history:
+                presenter.historyPressed();
+                break;
+            case R.id.switch_language:
+                presenter.switchLanguage();
+                break;
+            case R.id.clear_btn:
+                searchText.setText("");
+                presenter.clearButtonPressed();
+        }
+    }
+
 }
