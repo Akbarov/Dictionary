@@ -9,6 +9,7 @@ public interface Constants {
 
     String LANGUAGE = "language";
     String FAVORITE = "favorite";
+    String HISTORY = "history";
     String WORDS_TABLE_NAME = "words";
     String WORD_ID = "id";
     String WORD_TYPE = "type";

@@ -42,11 +42,11 @@ public class PrefManager implements Constants {
 
 
     public void setHistory(boolean isLastWordsShown) {
-        prefsHelper.put(FAVORITE, isLastWordsShown);
+        prefsHelper.put(HISTORY, isLastWordsShown);
     }
 
     public boolean isLastWordsShown() {
-        return prefsHelper.get(FAVORITE, false);
+        return prefsHelper.get(HISTORY, false);
     }
 
 

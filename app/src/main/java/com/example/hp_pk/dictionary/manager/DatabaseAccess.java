@@ -95,7 +95,7 @@ public class DatabaseAccess implements Constants {
 
     public List<WordClass> getLastWords(int type) {
         List<WordClass> wordList = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM words where type =? and used_date >0 order by used_date ASC", new String[]{String.valueOf(type)});
+        Cursor cursor = database.rawQuery("SELECT * FROM words where type =? and used_date >0 order by used_date DESC", new String[]{String.valueOf(type)});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             wordList.add(new WordClass(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getLong(4), cursor.getInt(5) == 1));
@@ -108,6 +108,11 @@ public class DatabaseAccess implements Constants {
     public void updateLastUsedDate(int wordId) {
         ContentValues values = new ContentValues();
         values.put(WORD_LAST_USED_DATE, System.currentTimeMillis());
+        database.update(WORDS_TABLE_NAME, values, WORD_ID + "=" + wordId, null);
+    }
+    public void updateFavoriteState(int wordId,int state) {
+        ContentValues values = new ContentValues();
+        values.put(WORD_IS_FAVORITE, state);
         database.update(WORDS_TABLE_NAME, values, WORD_ID + "=" + wordId, null);
     }
 }
