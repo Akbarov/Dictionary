@@ -1,7 +1,8 @@
 package com.example.hp_pk.dictionary;
 
 /**
- * Created by root on 1/26/18.
+ * @auther root
+ * @since 1/26/18.
  */
 
 public class WordClass {
@@ -70,5 +71,17 @@ public class WordClass {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "WordClass{" +
+                "id=" + id +
+                ", type=" + type +
+                ", word='" + word + '\'' +
+                ", meaning='" + meaning + '\'' +
+                ", usedDate=" + usedDate +
+                ", isFavorite=" + isFavorite +
+                '}';
     }
 }

@@ -12,8 +12,12 @@ public interface DictionaryView extends MvpView {
 
     void backButtonPressed();
 
-    void favoriteButtonPressed();
+    void favoriteButtonPressed(boolean isFavorites);
 
-    void historyButtonPressed();
+    void historyButtonPressed(boolean isLastWordShown);
+
+    void switchTitleLanguage(int type);
+
+    void showHideClearButton(boolean hide);
 
 }

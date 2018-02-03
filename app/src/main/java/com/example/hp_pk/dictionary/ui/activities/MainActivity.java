@@ -1,7 +1,6 @@
 package com.example.hp_pk.dictionary.ui.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -47,16 +46,16 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void myTutorButtonClicked() {
-
+        MyTutor.start(this);
     }
 
     @Override
     public void dictionaryButtonClicked() {
-        Dictionary.start(this);
+        DictionaryActivity.start(this);
     }
 
     @Override
     public void booksButtonClicked() {
-
+        BooksActivity.start(this);
     }
 }

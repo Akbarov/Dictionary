@@ -3,4 +3,6 @@
     <string name="empty">Empty</string>
     <string name="icon">Icon</string>
     <string name="search">Search</string>
+    <string name="english_short">EN</string>
+    <string name="uzbek_short">UZ</string>
 </resources>
