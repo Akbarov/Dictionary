@@ -21,8 +21,6 @@ import dagger.android.HasFragmentInjector;
 
 public class Dictionary extends Application implements HasActivityInjector,HasFragmentInjector{
     private static AppComponent appComponent;
-
-
     @Inject
     DispatchingAndroidInjector<Activity> activityInjector;
 
