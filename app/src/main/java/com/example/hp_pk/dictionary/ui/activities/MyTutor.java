@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.example.hp_pk.dictionary.R;
 
+import butterknife.ButterKnife;
+
 /**
  * @auther root
  * @since 1/29/18.
@@ -22,5 +24,7 @@ public class MyTutor extends MvpAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_tutor);
+        ButterKnife.bind(this);
+
     }
 }
