@@ -1,6 +1,5 @@
-package com.example.hp_pk.dictionary.Dao;
+package com.example.hp_pk.dictionary.room_database.dao;
 
-import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -9,13 +8,11 @@ import com.example.hp_pk.dictionary.manager.Subjects;
 
 import java.util.List;
 
-
 /**
- * @author HP-PK
- * @since 2018, February 09
+ * @auther root
+ * @since 2/9/18.
  */
 
-@Dao
 public interface SubjectDao {
     @Query("select * from subjects")
     List<Subjects> getAll();

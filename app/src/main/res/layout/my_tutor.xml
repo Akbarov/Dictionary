@@ -11,7 +11,10 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">
-
+        <include layout="@layout/button_layout"/>
+        <include layout="@layout/button_layout"/>
+        <include layout="@layout/button_layout"/>
+        <include layout="@layout/button_layout"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

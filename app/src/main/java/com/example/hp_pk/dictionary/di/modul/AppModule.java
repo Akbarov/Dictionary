@@ -3,7 +3,6 @@ package com.example.hp_pk.dictionary.di.modul;
 import android.content.Context;
 
 import com.example.hp_pk.dictionary.Dictionary;
-import com.example.hp_pk.dictionary.manager.AppDatabase;
 import com.example.hp_pk.dictionary.manager.DbManager;
 import com.example.hp_pk.dictionary.manager.PrefManager;
 

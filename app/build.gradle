@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
-
-def green_dao = "3.2.2"
-def sql_cipher = "3.5.7@aar"
 def moxy = "1.5.3"
 def dagger = "2.13"
 def butter_knife = "8.8.1"
@@ -93,15 +90,12 @@ dependencies {
     implementation "com.arello-mobile:moxy-android:$moxy"
     implementation "com.arello-mobile:moxy-app-compat:$moxy"
 
-    implementation "net.zetetic:android-database-sqlcipher:$sql_cipher"
-
     implementation "com.jude:easyrecyclerview:$easy"
     implementation "com.miguelcatalan:materialsearchview:$searchView"
 
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
     implementation "com.github.barteksc:android-pdf-viewer:$pdf"
-    implementation "android.arch.lifecycle:common-java8:1.1.0"
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.0"
     // alternatively, just ViewModel
