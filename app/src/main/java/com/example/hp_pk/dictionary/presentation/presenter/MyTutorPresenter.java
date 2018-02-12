@@ -2,8 +2,10 @@ package com.example.hp_pk.dictionary.presentation.presenter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.manager.Subjects;
 import com.example.hp_pk.dictionary.presentation.view.MyTutorView;
+import com.example.hp_pk.dictionary.room_database.data_source.SubjectDataSource;
 import com.example.hp_pk.dictionary.room_database.repository.SubjectRepository;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
     SubjectRepository subjectRepository;
 
     public MyTutorPresenter() {
+        Dictionary.getAppComponent().inject(this);
         stateView = getViewState();
     }
 

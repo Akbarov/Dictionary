@@ -6,8 +6,6 @@ import com.example.hp_pk.dictionary.room_database.repository.SubjectRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * @auther root
  * @since 2/9/18.
@@ -16,12 +14,9 @@ import javax.inject.Inject;
 public class SubjectDataSource implements SubjectRepository {
     private SubjectDao subjectDao;
 
-    @Inject
     public SubjectDataSource(SubjectDao subjectDao) {
         this.subjectDao = subjectDao;
     }
-
-
     @Override
     public void insertAll(List<Subjects> list) {
         subjectDao.insertAll(list);

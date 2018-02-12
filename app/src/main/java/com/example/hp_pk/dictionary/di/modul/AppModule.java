@@ -30,4 +30,6 @@ public class AppModule {
     PrefManager getPrefManager(Context context) {
         return new PrefManager(context);
     }
+
+
 }

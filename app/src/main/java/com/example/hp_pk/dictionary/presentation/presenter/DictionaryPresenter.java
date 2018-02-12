@@ -25,7 +25,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by root on 1/25/18.
+ * @auther ZOHIDJON
+ * @since 1/25/18.
  */
 @InjectViewState
 public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
