@@ -12,16 +12,21 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "subjects")
 public class Subjects {
     @PrimaryKey
-    private int id;
+    private String id;
 
     @ColumnInfo(name = "subject")
     private String subject;
 
-    public int getId() {
+    public Subjects(String id, String subject) {
+        this.id = id;
+        this.subject = subject;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -3,8 +3,11 @@ package com.example.hp_pk.dictionary.di.companent;
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.di.modul.AppModule;
 import com.example.hp_pk.dictionary.di.modul.BuilderModul;
+import com.example.hp_pk.dictionary.di.modul.DatabaseModule;
 import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MainPresenter;
+import com.example.hp_pk.dictionary.room_database.AppDatabase;
+import com.example.hp_pk.dictionary.room_database.dao.SubjectDao;
 import com.example.hp_pk.dictionary.ui.activities.DictionaryActivity;
 
 import javax.inject.Singleton;

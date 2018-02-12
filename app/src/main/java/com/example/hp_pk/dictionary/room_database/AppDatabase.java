@@ -12,7 +12,10 @@ import com.example.hp_pk.dictionary.room_database.dao.SubjectDao;
  * @since 2018, February 09
  */
 
-@Database(entities = {Subjects.class}, version = 1)
+@Database(entities = {Subjects.class}, version = AppDatabase.VERSION)
 public abstract class AppDatabase extends RoomDatabase {
+
+    static final short VERSION = 1;
+
     public abstract SubjectDao subjectDao();
 }
