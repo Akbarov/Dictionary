@@ -6,15 +6,13 @@
     android:scrollbarStyle="outsideOverlay">
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">
-        <include layout="@layout/button_layout"/>
-        <include layout="@layout/button_layout"/>
-        <include layout="@layout/button_layout"/>
-        <include layout="@layout/button_layout"/>
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

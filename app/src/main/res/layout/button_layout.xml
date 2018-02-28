@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:layout_marginBottom="@dimen/dictionary_row_padding"
-    android:background="@drawable/button_background"
-    android:text="Chemistry"
-    android:textColor="@color/button_text_color" />
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_margin="@dimen/dictionary_row_padding"
+        android:background="@drawable/button_background"
+        android:textColor="@color/button_text_color" />
+</LinearLayout>

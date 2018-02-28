@@ -3,10 +3,9 @@ package com.example.hp_pk.dictionary.presentation.presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
-import com.example.hp_pk.dictionary.manager.Subjects;
+import com.example.hp_pk.dictionary.database.DbManager;
+import com.example.hp_pk.dictionary.database.Subject;
 import com.example.hp_pk.dictionary.presentation.view.MyTutorView;
-import com.example.hp_pk.dictionary.room_database.data_source.SubjectDataSource;
-import com.example.hp_pk.dictionary.room_database.repository.SubjectRepository;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
     private MyTutorView stateView;
 
     @Inject
-    SubjectRepository subjectRepository;
+    DbManager manager;
 
     public MyTutorPresenter() {
         Dictionary.getAppComponent().inject(this);
@@ -30,12 +29,15 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
     }
 
     private void showAllSubjectsInUI() {
-        stateView.setAllSubjects(subjectRepository.getAll());
+        stateView.setAllSubjects(manager.getAllSubjects());
     }
 
-    public void setAllSubjects(List<Subjects> list) {
-        subjectRepository.insertAll(list);
+    public void setAllSubjects(List<Subject> list) {
         showAllSubjectsInUI();
+        for (Subject subject : list) {
+            manager.setSubject(subject);
+        }
     }
+
 
 }

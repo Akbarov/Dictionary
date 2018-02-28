@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hp_pk.dictionary">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Dictionary"
@@ -28,7 +28,8 @@
             android:name=".ui.activities.MyTutor"
             android:theme="@style/NoActionBar" />
 
-        <activity android:name=".ui.activities.BooksActivity" />
+        <activity android:name=".ui.activities.BookActivity" />
+        <activity android:name=".ui.activities.BooksListActivity" />
     </application>
 
 </manifest>

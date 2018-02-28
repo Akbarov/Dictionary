@@ -2,9 +2,7 @@ package com.example.hp_pk.dictionary.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -13,7 +11,6 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
-import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 
 import java.io.File;
@@ -29,13 +26,13 @@ import butterknife.ButterKnife;
  * @since 1/30/18.
  */
 
-public class BooksActivity extends MvpAppCompatActivity implements OnPageChangeListener, OnLoadCompleteListener, OnPageErrorListener {
+public class BookActivity extends MvpAppCompatActivity implements OnPageChangeListener, OnLoadCompleteListener, OnPageErrorListener {
 
     @BindView(R.id.pdfView)
     PDFView pdfView;
 
     public static void start(Context context) {
-        context.startActivity(new Intent(context, BooksActivity.class));
+        context.startActivity(new Intent(context, BookActivity.class));
     }
 
     @Override
@@ -93,17 +90,17 @@ public class BooksActivity extends MvpAppCompatActivity implements OnPageChangeL
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        Toast.makeText(BooksActivity.this, "Page changed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(BookActivity.this, "Page changed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadComplete(int nbPages) {
-        Toast.makeText(BooksActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(BookActivity.this, "Completed", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onPageError(int page, Throwable t) {
-        Toast.makeText(BooksActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(BookActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

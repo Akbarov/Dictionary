@@ -56,6 +56,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void booksButtonClicked() {
-        BooksActivity.start(this);
+        BooksListActivity.start(this);
     }
 }
