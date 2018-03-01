@@ -1,6 +1,7 @@
 package com.example.hp_pk.dictionary.database;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
@@ -13,7 +14,10 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Book {
 
     @Index(unique = true)
-    String id;
+    long id;
+
+    @Index(unique = true)
+    String bookKey;
 
     @NotNull
     String name;
@@ -34,11 +38,15 @@ public class Book {
 
     String description;
 
-    @Generated(hash = 1884597530)
-    public Book(String id, @NotNull String name, @NotNull String author,
-            String imageUrl, @NotNull String bookUrl, double rate, long rateCount,
-            String category, String description) {
+    String size;
+
+    @Generated(hash = 2113851281)
+    public Book(long id, String bookKey, @NotNull String name,
+            @NotNull String author, String imageUrl, @NotNull String bookUrl,
+            double rate, long rateCount, String category, String description,
+            String size) {
         this.id = id;
+        this.bookKey = bookKey;
         this.name = name;
         this.author = author;
         this.imageUrl = imageUrl;
@@ -47,18 +55,27 @@ public class Book {
         this.rateCount = rateCount;
         this.category = category;
         this.description = description;
+        this.size = size;
     }
 
     @Generated(hash = 1839243756)
     public Book() {
     }
 
-    public String getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getBookKey() {
+        return this.bookKey;
+    }
+
+    public void setBookKey(String bookKey) {
+        this.bookKey = bookKey;
     }
 
     public String getName() {
@@ -125,4 +142,12 @@ public class Book {
         this.description = description;
     }
 
+    public String getSize() {
+        return this.size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+    
 }
