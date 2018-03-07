@@ -93,6 +93,7 @@ dependencies {
     implementation "com.github.barteksc:android-pdf-viewer:$pdf"
 
     implementation "com.makeramen:roundedimageview:$roundedImage"
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
 
 }

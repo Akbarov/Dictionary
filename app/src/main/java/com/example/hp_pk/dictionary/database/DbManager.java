@@ -57,4 +57,8 @@ public class DbManager {
     public List<Book> getBooks() {
         return session.getBookDao().loadAll();
     }
+
+    public List<Book> getBookByNameOrAuthor(String text) {
+        return session.getBookDao().queryRaw("name = ? OR author = ?", text, text);
+    }
 }

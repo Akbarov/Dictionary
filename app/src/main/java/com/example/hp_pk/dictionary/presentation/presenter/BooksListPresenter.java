@@ -15,11 +15,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 
 import javax.inject.Inject;
 
@@ -72,6 +74,11 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
             Book book = adapter.getItem(position);
             Log.d("sss", book.getName());
         });
+    }
+
+    public void searchWithFilter(String filter) {
+        adapter.clear();
+        adapter.addAll(manager.getBookByNameOrAuthor(filter));
     }
 
 }
