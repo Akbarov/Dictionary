@@ -10,6 +10,7 @@ import com.example.hp_pk.dictionary.database.Book;
 import com.example.hp_pk.dictionary.database.Books;
 import com.example.hp_pk.dictionary.database.DbManager;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
+import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.view.BooksListView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,10 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
 
     @Inject
     DbManager manager;
+
+    @Inject
+    PrefManager pref;
+
     private ItemClickListener itemClickListener;
 
     public BooksListPresenter() {
@@ -50,7 +55,8 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
         adapter.setOnItemClickListener(itemClickListener);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("books");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = reference.orderByKey().startAt("2");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
