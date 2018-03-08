@@ -3,6 +3,7 @@ package com.example.hp_pk.dictionary.presentation.view;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.example.hp_pk.dictionary.database.Book;
 
 /**
  * @auther ZOHIDJON
@@ -10,4 +11,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
  */
 @StateStrategyType(SkipStrategy.class)
 public interface BooksListView extends MvpView {
+
+    void startBookActivity(Book book);
+
 }

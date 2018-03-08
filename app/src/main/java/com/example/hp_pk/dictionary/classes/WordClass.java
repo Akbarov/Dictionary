@@ -1,4 +1,4 @@
-package com.example.hp_pk.dictionary;
+package com.example.hp_pk.dictionary.classes;
 
 /**
  * @auther root

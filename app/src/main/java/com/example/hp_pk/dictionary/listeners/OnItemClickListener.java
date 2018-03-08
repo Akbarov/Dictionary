@@ -1,6 +1,6 @@
 package com.example.hp_pk.dictionary.listeners;
 
-import com.example.hp_pk.dictionary.WordClass;
+import com.example.hp_pk.dictionary.classes.WordClass;
 
 /**
  * @auther root

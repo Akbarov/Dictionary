@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.hp_pk.dictionary.WordClass;
+import com.example.hp_pk.dictionary.classes.WordClass;
 import com.example.hp_pk.dictionary.utils.Constants;
 
 import java.util.ArrayList;

@@ -18,7 +18,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
-import com.example.hp_pk.dictionary.WordClass;
+import com.example.hp_pk.dictionary.classes.WordClass;
 import com.example.hp_pk.dictionary.manager.DatabaseAccess;
 import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;

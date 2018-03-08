@@ -7,11 +7,16 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.example.hp_pk.dictionary.R;
+import com.example.hp_pk.dictionary.database.Book;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
+import com.krishna.fileloader.FileLoader;
+import com.krishna.fileloader.listener.FileRequestListener;
+import com.krishna.fileloader.pojo.FileResponse;
+import com.krishna.fileloader.request.FileLoadRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +36,10 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
     @BindView(R.id.pdfView)
     PDFView pdfView;
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, BookActivity.class));
+    public static void start(Context context, Book book) {
+        Intent intent = new Intent(context, BookActivity.class);
+        intent.putExtra("book", book);
+        context.startActivity(intent);
     }
 
     @Override
@@ -40,6 +47,24 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_layout);
         ButterKnife.bind(this);
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            Book book = getIntent().getExtras().getParcelable("book");
+            if (book != null)
+                FileLoader.with(this)
+                        .load(book.getBookUrl())
+                        .fromDirectory("books", FileLoader.DIR_INTERNAL)
+                        .asFile(new FileRequestListener<File>() {
+                            @Override
+                            public void onLoad(FileLoadRequest request, FileResponse<File> response) {
+                                File loadedFile = response.getBody();
+                                readFromFile(loadedFile);
+                            }
+
+                            @Override
+                            public void onError(FileLoadRequest request, Throwable t) {
+                            }
+                        });
+        }
 //        AssetManager assetManager = getAssets();
 //        InputStream in = null;
 //        OutputStream out = null;
@@ -60,15 +85,15 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
 
 //        readFromFile(getFilesDir() + "/ABC.pdf");
 
-        pdfView.fromAsset("tarix.pdf")
-                .defaultPage(0)
-                .onPageChange(this)
-                .enableAnnotationRendering(true)
-                .onLoad(this)
-                .scrollHandle(new DefaultScrollHandle(this))
-                .spacing(10) // in dp
-                .onPageError(this)
-                .load();
+//        pdfView.fromAsset("tarix.pdf")
+//                .defaultPage(0)
+//                .onPageChange(this)
+//                .enableAnnotationRendering(true)
+//                .onLoad(this)
+//                .scrollHandle(new DefaultScrollHandle(this))
+//                .spacing(10) // in dp
+//                .onPageError(this)
+//                .load();
     }
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {
@@ -79,12 +104,15 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
         }
     }
 
-    private void readFromFile(String pdfName) {
-        File file = new File(pdfName);
+    private void readFromFile(File file) {
         pdfView.fromFile(file)
-                .enableSwipe(true)
-                .swipeHorizontal(false)
                 .defaultPage(0)
+                .onPageChange(this)
+                .enableAnnotationRendering(true)
+                .onLoad(this)
+                .scrollHandle(new DefaultScrollHandle(this))
+                .spacing(10) // in dp
+                .onPageError(this)
                 .load();
     }
 

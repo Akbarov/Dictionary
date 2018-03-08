@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
-import com.example.hp_pk.dictionary.WordClass;
+import com.example.hp_pk.dictionary.classes.WordClass;
 import com.example.hp_pk.dictionary.holder.WordViewHolder;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 import com.example.hp_pk.dictionary.listeners.OnItemClickListener;
@@ -31,12 +31,12 @@ import javax.inject.Inject;
 @InjectViewState
 public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
 
+    @Inject
+    PrefManager prefManager;
     private DictionaryView stateView;
     private RecyclerArrayAdapter<WordClass> adapter;
     private DatabaseAccess access;
     private int offset = 0;
-    @Inject
-    PrefManager prefManager;
     private ItemClickListener itemClickListener;
     private OnItemClickListener favoriteItemListener;
 
@@ -109,12 +109,13 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
     }
 
     public void historyPressed() {
-        changeHistoryIconState(prefManager.isLastWordsShown());
         changeFavoriteIconState(true);
         if (!prefManager.isLastWordsShown()) {
             setAllWords(access.getLastWords(prefManager.getLanguageType()));
-        } else
+        } else {
             setAllWords(access.getWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset));
+        }
+        changeHistoryIconState(prefManager.isLastWordsShown());
     }
 
     private void changeHistoryIconState(boolean history) {
@@ -138,7 +139,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
-                    //setAllWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset);
+                    setAllWords(access.getWords(prefManager.getLanguageType(), prefManager.isFavorite(), offset));
                     stateView.showHideClearButton(true);
                 } else {
                     setAllWordsWithFilter(prefManager.getLanguageType(), prefManager.isFavorite(), charSequence.toString());

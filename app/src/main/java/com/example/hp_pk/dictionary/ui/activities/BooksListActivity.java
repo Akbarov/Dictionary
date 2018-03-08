@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -116,5 +115,10 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
     public boolean onQueryTextChange(String newText) {
         presenter.searchWithFilter(newText);
         return true;
+    }
+
+    @Override
+    public void startBookActivity(Book book) {
+        BookActivity.start(this, book);
     }
 }

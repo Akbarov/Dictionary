@@ -1,50 +1,42 @@
 package com.example.hp_pk.dictionary.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * @auther ZOHIDJON
  * @since 2/28/18.
  */
 @Entity(nameInDb = "book")
-public class Book {
+public class Book implements Parcelable {
 
     @Index(unique = true)
     long id;
-
     @Index(unique = true)
     String bookKey;
-
     @NotNull
     String name;
-
     @NotNull
     String author;
-
     String imageUrl;
-
     @NotNull
     String bookUrl;
-
     double rate;
-
     long rateCount;
-
     String category;
-
     String description;
-
     String size;
 
     @Generated(hash = 2113851281)
     public Book(long id, String bookKey, @NotNull String name,
-            @NotNull String author, String imageUrl, @NotNull String bookUrl,
-            double rate, long rateCount, String category, String description,
-            String size) {
+                @NotNull String author, String imageUrl, @NotNull String bookUrl,
+                double rate, long rateCount, String category, String description,
+                String size) {
         this.id = id;
         this.bookKey = bookKey;
         this.name = name;
@@ -60,6 +52,20 @@ public class Book {
 
     @Generated(hash = 1839243756)
     public Book() {
+    }
+
+    protected Book(Parcel in) {
+        id = in.readLong();
+        bookKey = in.readString();
+        name = in.readString();
+        author = in.readString();
+        imageUrl = in.readString();
+        bookUrl = in.readString();
+        rate = in.readDouble();
+        rateCount = in.readLong();
+        category = in.readString();
+        description = in.readString();
+        size = in.readString();
     }
 
     public long getId() {
@@ -149,5 +155,34 @@ public class Book {
     public void setSize(String size) {
         this.size = size;
     }
-    
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int i) {
+            return new Book[0];
+        }
+
+    };
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(bookKey);
+        parcel.writeString(name);
+        parcel.writeString(author);
+        parcel.writeString(imageUrl);
+        parcel.writeString(bookUrl);
+        parcel.writeDouble(rate);
+        parcel.writeLong(rateCount);
+        parcel.writeString(category);
+        parcel.writeString(description);
+        parcel.writeString(size);
+    }
 }

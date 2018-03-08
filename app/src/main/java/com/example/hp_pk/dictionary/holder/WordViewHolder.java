@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hp_pk.dictionary.R;
-import com.example.hp_pk.dictionary.WordClass;
+import com.example.hp_pk.dictionary.classes.WordClass;
 import com.example.hp_pk.dictionary.listeners.OnItemClickListener;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 

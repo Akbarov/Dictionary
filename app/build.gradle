@@ -94,6 +94,7 @@ dependencies {
 
     implementation "com.makeramen:roundedimageview:$roundedImage"
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'com.github.kk121:File-Loader:1.2'
 
 
 }
