@@ -16,7 +16,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 public class Book implements Parcelable {
 
     @Index(unique = true)
-    long id;
+    String id;
     @Index(unique = true)
     String bookKey;
     @NotNull
@@ -32,8 +32,8 @@ public class Book implements Parcelable {
     String description;
     String size;
 
-    @Generated(hash = 2113851281)
-    public Book(long id, String bookKey, @NotNull String name,
+    @Generated(hash = 1123458101)
+    public Book(String id, String bookKey, @NotNull String name,
                 @NotNull String author, String imageUrl, @NotNull String bookUrl,
                 double rate, long rateCount, String category, String description,
                 String size) {
@@ -53,9 +53,19 @@ public class Book implements Parcelable {
     @Generated(hash = 1839243756)
     public Book() {
     }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
 
+        @Override
+        public Book[] newArray(int i) {
+            return new Book[0];
+        }
+
+    };
     protected Book(Parcel in) {
-        id = in.readLong();
+        id = in.readString();
         bookKey = in.readString();
         name = in.readString();
         author = in.readString();
@@ -68,11 +78,11 @@ public class Book implements Parcelable {
         size = in.readString();
     }
 
-    public long getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -160,20 +170,10 @@ public class Book implements Parcelable {
     public int describeContents() {
         return 0;
     }
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Book createFromParcel(Parcel in) {
-            return new Book(in);
-        }
 
-        @Override
-        public Book[] newArray(int i) {
-            return new Book[0];
-        }
-
-    };
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(id);
+        parcel.writeString(id);
         parcel.writeString(bookKey);
         parcel.writeString(name);
         parcel.writeString(author);
@@ -185,4 +185,6 @@ public class Book implements Parcelable {
         parcel.writeString(description);
         parcel.writeString(size);
     }
+
+
 }

@@ -1,6 +1,10 @@
 package com.example.hp_pk.dictionary.ui.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -25,6 +29,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
+
     }
 
     @OnClick(value = {R.id.my_tutor, R.id.dictionary, R.id.books})
@@ -39,8 +44,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
             case R.id.books:
                 presenter.booksButtonClicked();
                 break;
-
-
         }
     }
 

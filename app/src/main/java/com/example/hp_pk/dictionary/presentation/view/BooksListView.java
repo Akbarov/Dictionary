@@ -14,4 +14,7 @@ public interface BooksListView extends MvpView {
 
     void startBookActivity(Book book);
 
+    void getBookListCanceled(String message);
+
+    void updateCategories();
 }

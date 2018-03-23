@@ -1,8 +1,21 @@
 <resources>
-    <string name="app_name">E-Learn</string>
+    <string name="app_name">My Center</string>
     <string name="empty">Empty</string>
     <string name="icon">Icon</string>
     <string name="search">Search</string>
     <string name="english_short">EN</string>
     <string name="uzbek_short">UZ</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    //book category names
+    <string name="literature">Badiiy Adabiyotlar</string>
+    <string name="lessons">Darsliklar</string>
+    <string name="ielts">IELTS</string>
+    <string name="journal">Jurnallar</string>
+
 </resources>

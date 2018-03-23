@@ -1,22 +1,21 @@
 package com.example.hp_pk.dictionary.presentation.presenter;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
+import com.example.hp_pk.dictionary.adapters.MyViewPagerAdapter;
 import com.example.hp_pk.dictionary.database.Book;
+import com.example.hp_pk.dictionary.database.Categories;
 import com.example.hp_pk.dictionary.database.DbManager;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.view.BooksListView;
-import com.example.hp_pk.dictionary.ui.activities.BookActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -29,16 +28,15 @@ import javax.inject.Inject;
 @InjectViewState
 public class BooksListPresenter extends MvpPresenter<BooksListView> {
 
-    private BooksListView stateView;
-    private RecyclerArrayAdapter<Book> adapter;
-
     @Inject
     DbManager manager;
-
     @Inject
     PrefManager pref;
-
+    private BooksListView stateView;
+    private RecyclerArrayAdapter<Book> adapter;
     private ItemClickListener itemClickListener;
+    private long updatedLimit = 86400000; // 1 day
+    private String bookCategory;
 
     public BooksListPresenter() {
         stateView = getViewState();
@@ -46,28 +44,52 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
         setUpListener();
     }
 
-    public void setAdapter(RecyclerArrayAdapter<Book> adapter) {
+    public void setAdapter(RecyclerArrayAdapter<Book> adapter, String bookCategory) {
+        this.bookCategory = bookCategory;
         this.adapter = adapter;
         adapter.setOnItemClickListener(itemClickListener);
+        if (System.currentTimeMillis() - pref.getLastBookUpdated(bookCategory) > updatedLimit) {
+            updateBooksFromServer();
+        } else {
+            searchWithFilter("");
+        }
+    }
+
+    private void updateBooksFromServer() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference("books");
-        Query query = reference.orderByKey().startAt("2");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference reference = database.getReference("books/" + bookCategory);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Book book = snapshot.getValue(Book.class);
-                    book.setBookKey(snapshot.getKey());
-                    adapter.add(book);
-                    adapter.notifyDataSetChanged();
+                    int count = 0;
+                    for (DataSnapshot bookSnapshot : snapshot.getChildren()) {
+                        Book book = bookSnapshot.getValue(Book.class);
+                        if (book != null)
+                            book.setBookKey(snapshot.getKey());
+                        manager.setBook(book);
+                        count++;
+                    }
+                    Categories categories = new Categories(snapshot.getKey(), count, bookCategory);
+                    manager.setCategory(categories);
                 }
+                if (pref.getLastBookUpdated(bookCategory) == 0) {
+                    stateView.updateCategories();
+                }
+                searchWithFilter("");
+                pref.setLastBookUpdated(bookCategory, System.currentTimeMillis());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                stateView.getBookListCanceled(databaseError.getMessage());
             }
         });
+    }
+
+    public MyViewPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
+        return new MyViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(bookCategory));
     }
 
     private void setUpListener() {
@@ -82,6 +104,13 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
     public void searchWithFilter(String filter) {
         adapter.clear();
         adapter.addAll(manager.getBookByNameOrAuthor(filter));
+        adapter.notifyDataSetChanged();
     }
 
+    public boolean hasCategory() {
+        if (pref.getLastBookUpdated(bookCategory) == 0)
+            return false;
+        else
+            return manager.getCategoriesByMainCategory(bookCategory) != null;
+    }
 }

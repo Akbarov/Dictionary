@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hp_pk.dictionary">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".Dictionary"
@@ -14,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.NavigationActivity"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +33,9 @@
         <activity
             android:name=".ui.activities.MyTutor"
             android:theme="@style/NoActionBar" />
-
         <activity android:name=".ui.activities.BookActivity" />
         <activity android:name=".ui.activities.BooksListActivity" />
+
     </application>
 
 </manifest>

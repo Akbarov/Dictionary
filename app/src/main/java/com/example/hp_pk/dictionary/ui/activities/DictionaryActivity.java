@@ -39,8 +39,6 @@ import butterknife.OnClick;
 
 public class DictionaryActivity extends MvpAppCompatActivity implements DictionaryView {
 
-    private DatabaseAccess access;
-
     @InjectPresenter
     DictionaryPresenter presenter;
 
@@ -73,8 +71,6 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
 
     @Inject
     PrefManager prefManager;
-
-    private RecyclerArrayAdapter<WordClass> adapter;
 
     public static void start(Context context) {
         context.startActivity(new Intent(context, DictionaryActivity.class));

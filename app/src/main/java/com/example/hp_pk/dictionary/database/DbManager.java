@@ -2,8 +2,6 @@ package com.example.hp_pk.dictionary.database;
 
 import android.content.Context;
 
-import com.example.hp_pk.dictionary.BuildConfig;
-
 import org.greenrobot.greendao.database.Database;
 
 import java.util.List;
@@ -58,7 +56,25 @@ public class DbManager {
         return session.getBookDao().loadAll();
     }
 
+    public List<Book> getBooksByCategory(String category) {
+        return session.getBookDao().queryRaw("WHERE T.CATEGORY =?", category.toLowerCase());
+    }
+
     public List<Book> getBookByNameOrAuthor(String text) {
-        return session.getBookDao().queryRaw("name = ? OR author = ?", text, text);
+        if (text.isEmpty()) return getBooks();
+        else
+            return session.getBookDao().queryRaw("WHERE T.NAME LIKE ? OR T.AUTHOR LIKE ?", text + "%", text + "%");
+    }
+
+    public void setCategory(Categories category) {
+        session.getCategoriesDao().insertOrReplace(category);
+    }
+
+    public List<Categories> getCategories() {
+        return session.getCategoriesDao() != null ? session.getCategoriesDao().loadAll() : null;
+    }
+
+    public List<Categories> getCategoriesByMainCategory(String mainCategory) {
+        return session.getCategoriesDao().queryRaw("WHERE T.MAIN_CATEGORY =?", mainCategory);
     }
 }
