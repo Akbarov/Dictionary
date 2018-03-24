@@ -43,7 +43,7 @@ public class NavigationActivity extends AppCompatActivity
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123
             );
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_current, new NewsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewsFragment()).commit();
     }
 
     @Override

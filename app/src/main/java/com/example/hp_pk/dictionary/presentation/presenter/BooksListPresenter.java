@@ -103,7 +103,7 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
 
     public void searchWithFilter(String filter) {
         adapter.clear();
-        adapter.addAll(manager.getBookByNameOrAuthor(filter));
+        adapter.addAll(manager.getBookByNameOrAuthor(bookCategory,filter));
         adapter.notifyDataSetChanged();
     }
 
