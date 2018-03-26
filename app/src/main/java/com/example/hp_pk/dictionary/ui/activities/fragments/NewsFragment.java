@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hp_pk.dictionary.R;
-import com.example.hp_pk.dictionary.database.Book;
-import com.example.hp_pk.dictionary.holder.BookViewHolder;
+import com.example.hp_pk.dictionary.database.News;
+import com.example.hp_pk.dictionary.holder.NewsHolder;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +30,7 @@ public class NewsFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter<Book> adapter;
+    private RecyclerArrayAdapter<News> adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,14 +50,19 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setAdapterWithProgress(adapter);
-
+        List<News> newsList = new ArrayList<>();
+        newsList.add(new News());
+        newsList.add(new News());
+        newsList.add(new News());
+        adapter.addAll(newsList);
+        adapter.notifyDataSetChanged();
     }
 
     private void createAdapter() {
-       adapter = new RecyclerArrayAdapter<Book>(getContext()) {
+        adapter = new RecyclerArrayAdapter<News>(getContext()) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new BookViewHolder(parent, getContext());
+                return new NewsHolder(parent, getContext());
             }
         };
     }
