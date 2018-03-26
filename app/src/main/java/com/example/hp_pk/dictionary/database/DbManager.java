@@ -57,7 +57,7 @@ public class DbManager {
     }
 
     public List<Book> getBooks(String category) {
-        return session.getBookDao().queryRaw("WHERE T.CATEGORY =?", category);
+        return session.getBookDao().queryRaw("WHERE T.MAIN_CATEGORY =?", category);
     }
 
     public List<Book> getBooksByCategory(String category) {
@@ -73,7 +73,7 @@ public class DbManager {
     public List<Book> getBookByNameOrAuthor(String category, String text) {
         if (text.isEmpty()) return getBooks(category);
         else
-            return session.getBookDao().queryRaw("WHERE T.CATEGORY =? and (T.NAME LIKE ? OR T.AUTHOR LIKE ?)", category, text + "%", text + "%");
+            return session.getBookDao().queryRaw("WHERE T.MAIN_CATEGORY =? and (T.NAME LIKE ? OR T.AUTHOR LIKE ?)", category, text + "%", text + "%");
     }
 
     public void setCategory(Categories category) {

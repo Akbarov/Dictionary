@@ -66,8 +66,10 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
                     int count = 0;
                     for (DataSnapshot bookSnapshot : snapshot.getChildren()) {
                         Book book = bookSnapshot.getValue(Book.class);
-                        if (book != null)
+                        if (book != null) {
                             book.setBookKey(snapshot.getKey());
+                            book.setMainCategory(bookCategory);
+                        }
                         manager.setBook(book);
                         count++;
                     }
@@ -103,7 +105,7 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
 
     public void searchWithFilter(String filter) {
         adapter.clear();
-        adapter.addAll(manager.getBookByNameOrAuthor(bookCategory,filter));
+        adapter.addAll(manager.getBookByNameOrAuthor(bookCategory, filter));
         adapter.notifyDataSetChanged();
     }
 
