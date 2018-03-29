@@ -56,6 +56,14 @@ public class PrefManager implements Constants {
         prefsHelper.put(LAST_BOOK_UPDATED + category, lastBookUpdated);
     }
 
+    public long getLastMyTutorUpdated(String category) {
+        return prefsHelper.get(LAST_MyTutor_UPDATED + category, 0L);
+    }
+
+    public void setLastMyTutorUpdated(String category, long lastBookUpdated) {
+        prefsHelper.put(LAST_MyTutor_UPDATED + category, lastBookUpdated);
+    }
+
     public int getSizeOfBooks() {
         return prefsHelper.get(SIZE_OF_BOOKS, 0);
     }

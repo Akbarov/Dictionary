@@ -18,4 +18,11 @@
     <string name="ielts">IELTS</string>
     <string name="journal">Jurnallar</string>
 
+    //my center
+
+    <string name="extra">Extracurricular</string>
+    <string name="my_lesson">Lessons</string>
+    <string name="test">Tests</string>
+    <string name="payment">Payment</string>
+
 </resources>

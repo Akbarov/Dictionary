@@ -25,14 +25,20 @@ public class News {
 
     private int likeNumber;
 
-    @Generated(hash = 1748358093)
+    private boolean likeYou;
+
+    private long date;
+
+    @Generated(hash = 637908953)
     public News(String id, @NotNull String imageUrl, String header,
-            String description, int likeNumber) {
+            String description, int likeNumber, boolean likeYou, long date) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.header = header;
         this.description = description;
         this.likeNumber = likeNumber;
+        this.likeYou = likeYou;
+        this.date = date;
     }
 
     @Generated(hash = 1579685679)
@@ -77,6 +83,22 @@ public class News {
 
     public void setLikeNumber(int likeNumber) {
         this.likeNumber = likeNumber;
+    }
+
+    public boolean getLikeYou() {
+        return this.likeYou;
+    }
+
+    public void setLikeYou(boolean likeYou) {
+        this.likeYou = likeYou;
+    }
+
+    public long getDate() {
+        return this.date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 
 }

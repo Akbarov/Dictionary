@@ -64,7 +64,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
 
     private void setUpListeners() {
         itemClickListener = new ItemClickListener(position -> {
-            Log.d("sss", position + "");
+            Log.d("sss", position +", " + adapter.getItem(position).getMeaning());
             WordClass wordClass = adapter.getItem(position);
             if (wordClass != null) {
                 access.updateLastUsedDate(wordClass.getId());

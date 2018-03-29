@@ -23,7 +23,7 @@ public class DbManager {
 
     private void makeDatabase() {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "local.db");
-        Database db = helper.getEncryptedWritableDb("MyPassword");
+        Database db = helper.getWritableDb();
         session = new DaoMaster(db).newSession();
     }
 
@@ -78,6 +78,30 @@ public class DbManager {
 
     public void setCategory(Categories category) {
         session.getCategoriesDao().insertOrReplace(category);
+    }
+
+    public void setAudio(Audio audio) {
+        session.getAudioDao().insertOrReplace(audio);
+    }
+
+    public List<Audio> getAudioList() {
+        return session.getAudioDao().loadAll();
+    }
+
+    public void setMovie(Movie movie) {
+        session.getMovieDao().insertOrReplace(movie);
+    }
+
+    public List<Movie> getMovieList() {
+        return session.getMovieDao().loadAll();
+    }
+
+    public void setPhoto(Photo photo) {
+        session.getPhotoDao().insertOrReplace(photo);
+    }
+
+    public List<Photo> getPhotoList() {
+        return session.getPhotoDao().loadAll();
     }
 
     public List<Categories> getCategories() {

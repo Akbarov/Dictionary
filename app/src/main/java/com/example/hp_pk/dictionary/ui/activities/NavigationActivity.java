@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.ui.activities.fragments.ChooseBookCategory;
 import com.example.hp_pk.dictionary.ui.activities.fragments.NewsFragment;
+import com.example.hp_pk.dictionary.ui.activities.fragments.TutorFragment;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -61,23 +62,31 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        android.support.v4.app.Fragment fragment;
         switch (id) {
             case R.id.my_tutor:
-                MyTutor.start(NavigationActivity.this);
+                fragment = getSupportFragmentManager().findFragmentByTag("tutor");
+                if (fragment == null) {
+                    fragment = new TutorFragment();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "tutor").commit();
                 break;
             case R.id.dictionary:
                 DictionaryActivity.start(NavigationActivity.this);
                 break;
             case R.id.books:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChooseBookCategory()).commit();
+                fragment = getSupportFragmentManager().findFragmentByTag("books");
+                if (fragment == null) {
+                    fragment = new ChooseBookCategory();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "books").commit();
                 break;
             case R.id.news:
-                android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag("news");
+                fragment = getSupportFragmentManager().findFragmentByTag("news");
                 if (fragment == null) {
                     fragment = new NewsFragment();
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "news").commit();
                 break;
         }
 

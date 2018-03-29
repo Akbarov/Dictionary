@@ -18,6 +18,7 @@ public interface Constants {
     String WORD_LAST_USED_DATE = "used_date";
     String WORD_IS_FAVORITE = "is_favorite";
     String LAST_BOOK_UPDATED = "last_book_updated";
+    String LAST_MyTutor_UPDATED = "last_my_tutor_updated";
     String SIZE_OF_BOOKS = "size_of_books";
 
 }
