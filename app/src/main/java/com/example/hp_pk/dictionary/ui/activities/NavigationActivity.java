@@ -43,7 +43,7 @@ public class NavigationActivity extends AppCompatActivity
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123
             );
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewsFragment(), "news").commit();
     }
 
     @Override
@@ -71,6 +71,13 @@ public class NavigationActivity extends AppCompatActivity
                 break;
             case R.id.books:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChooseBookCategory()).commit();
+                break;
+            case R.id.news:
+                android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag("news");
+                if (fragment == null) {
+                    fragment = new NewsFragment();
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                 break;
         }
 
