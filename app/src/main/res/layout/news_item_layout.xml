@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     android:layout_marginTop="8dp"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="6dp"
@@ -38,6 +40,35 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:maxLines="3"
+            android:text="fdhvdaskhv asdfdas adsfdsa adsgas adda daf adf adf sdf"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="2017-Mar-27 08:55"
+                android:textSize="11sp" />
+
             <TextView
                 android:id="@+id/like_number"
                 android:layout_width="wrap_content"
@@ -52,15 +83,22 @@
                 android:src="@drawable/ic_star_24dp"
                 android:tint="@color/colorPrimary" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="fdhvdaskhv asdfdas adsfdsa adsgas adda daf adf adf sdf"
-            android:textColor="@color/colorTextSecondary"
-            android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="end"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_menu_share"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

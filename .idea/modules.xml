@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://D:\GeekPro\MyDictionary\Dictionary.iml" filepath="D:\GeekPro\MyDictionary\Dictionary.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/MyDictionary.iml" filepath="$PROJECT_DIR$/.idea/MyDictionary.iml" />
-      <module fileurl="file://D:\GeekPro\MyDictionary\.idea\NewDictionary.iml" filepath="D:\GeekPro\MyDictionary\.idea\NewDictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NewDictionary.iml" filepath="$PROJECT_DIR$/.idea/NewDictionary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

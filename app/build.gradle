@@ -84,7 +84,6 @@ dependencies {
     implementation "com.arello-mobile:moxy-android:$moxy"
     implementation "com.arello-mobile:moxy-app-compat:$moxy"
     implementation "org.greenrobot:greendao:$green_dao"
-    implementation "net.zetetic:android-database-sqlcipher:$sql_cipher"
 
     implementation "com.jude:easyrecyclerview:$easy"
 
