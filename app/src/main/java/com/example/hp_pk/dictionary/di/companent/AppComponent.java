@@ -8,6 +8,7 @@ import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MainPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MyTutorPresenter;
 import com.example.hp_pk.dictionary.ui.activities.DictionaryActivity;
+import com.example.hp_pk.dictionary.ui.activities.fragments.AudioRecyclerFragment;
 import com.example.hp_pk.dictionary.ui.activities.fragments.RecyclerFragment;
 
 import javax.inject.Singleton;
@@ -37,6 +38,8 @@ public interface AppComponent {
     void inject(BooksListPresenter presenter);
 
     void inject(RecyclerFragment fragment);
+
+    void inject(AudioRecyclerFragment fragment);
 
 
     @Component.Builder

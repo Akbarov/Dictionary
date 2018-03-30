@@ -37,6 +37,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
     sourceSets {
         main {
             java {
@@ -94,8 +97,7 @@ dependencies {
     implementation "com.makeramen:roundedimageview:$roundedImage"
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.github.kk121:File-Loader:1.2'
-
-
+    compile 'com.aloj.progress:download-progress:1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

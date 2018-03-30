@@ -5,6 +5,7 @@ import android.util.Log;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
+import com.example.hp_pk.dictionary.adapters.MyTutorViewPagerAdapter;
 import com.example.hp_pk.dictionary.adapters.MyViewPagerAdapter;
 import com.example.hp_pk.dictionary.database.Audio;
 import com.example.hp_pk.dictionary.database.Book;
@@ -36,29 +37,21 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
     @Inject
     PrefManager pref;
     private BooksListView stateView;
-    private RecyclerArrayAdapter<Book> adapter;
-    private ItemClickListener itemClickListener;
     private long updatedLimit = 86400000; // 1 day
     private String category;
 
     public MyTutorPresenter() {
         stateView = getViewState();
         Dictionary.getAppComponent().inject(this);
-        setUpListener();
     }
 
-    public void setAdapter(RecyclerArrayAdapter<Book> adapter, String bookCategory) {
-        this.category = bookCategory;
-        this.adapter = adapter;
-        adapter.setOnItemClickListener(itemClickListener);
-        if (System.currentTimeMillis() - pref.getLastMyTutorUpdated(bookCategory) > updatedLimit) {
-            updateBooksFromServer();
-        } else {
-            searchWithFilter("");
-        }
+    private boolean needToUpdate(String category) {
+        return System.currentTimeMillis() - pref.getLastMyTutorUpdated(category) > updatedLimit;
     }
 
-    private void updateBooksFromServer() {
+    public void updateBooksFromServer(String category) {
+        this.category = category;
+//        if (!needToUpdate(category)) return;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("My Center/" + category);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,14 +85,13 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
             } else if ("Lessons".equals(categorySnapshot.getKey())) {
                 parseLessons(categorySnapshot);
             }
+            Categories categories = new Categories(categorySnapshot.getKey(), count, category);
+            manager.setCategory(categories);
         }
-        Categories categories = new Categories(dataSnapshot.getKey(), count, category);
-        manager.setCategory(categories);
 
         if (pref.getLastBookUpdated(category) == 0) {
             stateView.updateCategories();
         }
-        searchWithFilter("");
         pref.setLastBookUpdated(category, System.currentTimeMillis());
     }
 
@@ -131,27 +123,12 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
         }
     }
 
-    public MyViewPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
-        return new MyViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
-    }
-
-    private void setUpListener() {
-        itemClickListener = new ItemClickListener(position -> {
-            Log.d("sss", position + "");
-            Book book = adapter.getItem(position);
-            Log.d("sss", book.getName());
-            stateView.startBookActivity(book);
-        });
-    }
-
-    public void searchWithFilter(String filter) {
-        adapter.clear();
-        adapter.addAll(manager.getBookByNameOrAuthor(category, filter));
-        adapter.notifyDataSetChanged();
+    public MyTutorViewPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
+        return new MyTutorViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
     }
 
     public boolean hasCategory() {
-        if (pref.getLastBookUpdated(category) == 0)
+        if (pref.getLastMyTutorUpdated(category) == 0)
             return false;
         else
             return manager.getCategoriesByMainCategory(category) != null;

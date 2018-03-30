@@ -50,16 +50,13 @@ import butterknife.ButterKnife;
  * @since 1/29/18.
  */
 
-public class MyTutor extends MvpAppCompatActivity implements BooksListView, MaterialSearchView.SearchViewListener, MaterialSearchView.OnQueryTextListener {
+public class MyTutor extends MvpAppCompatActivity implements BooksListView {
 
     @InjectPresenter
     MyTutorPresenter presenter;
 
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
-
-    @BindView(R.id.search_view)
-    MaterialSearchView searchView;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -73,7 +70,7 @@ public class MyTutor extends MvpAppCompatActivity implements BooksListView, Mate
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private String category;
+    private String category = "";
 
     public static void start(Context context) {
         context.startActivity(new Intent(context, MyTutor.class));
@@ -90,23 +87,19 @@ public class MyTutor extends MvpAppCompatActivity implements BooksListView, Mate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_list_layout);
         ButterKnife.bind(this);
-        searchView.setVoiceSearch(false);
-        searchView.setCursorDrawable(R.drawable.color_cursor_white);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         if (getIntent() != null) {
             this.category = getIntent().getStringExtra("category");
         }
-        setTitle("My Center");
-
-        toolbar.setNavigationOnClickListener(v -> finish());
-        createAdapter();
-        setUpPager();
-        searchView.setOnSearchViewListener(this);
-        searchView.setOnQueryTextListener(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setVisibility(View.GONE);
+        setTitle("My Center");
+        toolbar.setNavigationOnClickListener(v -> finish());
+        presenter.updateBooksFromServer(category);
+        setUpPager();
     }
 
     public void setUpPager() {
@@ -114,62 +107,9 @@ public class MyTutor extends MvpAppCompatActivity implements BooksListView, Mate
             tabLayout.setupWithViewPager(pager);
             pager.setAdapter(presenter.getPagerAdapter(getSupportFragmentManager()));
             progressBar.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
         } else {
             progressBar.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void createAdapter() {
-        RecyclerArrayAdapter<Book> adapter = new RecyclerArrayAdapter<Book>(this) {
-            @Override
-            public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new BookViewHolder(parent, MyTutor.this);
-            }
-        };
-        presenter.setAdapter(adapter, category.isEmpty() ? getString(R.string.lessons) : category);
-        recyclerView.setAdapterWithProgress(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.books_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (searchView.isSearchOpen()) {
-            searchView.closeSearch();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onSearchViewShown() {
-        pager.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onSearchViewClosed() {
-        recyclerView.setVisibility(View.GONE);
-        pager.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        presenter.searchWithFilter(newText);
-        return true;
     }
 
     @Override
