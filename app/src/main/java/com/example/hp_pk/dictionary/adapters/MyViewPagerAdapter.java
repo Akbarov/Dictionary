@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public class MyViewPagerAdapter extends FragmentPagerAdapter {
-    private int count = 0;
+    private int count = 4;
     private List<Categories> categoriesList;
 
     public MyViewPagerAdapter(FragmentManager fm, List<Categories> categoryList) {

@@ -9,6 +9,7 @@
     <uses-permission
         android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".Dictionary"
@@ -35,6 +36,9 @@
             android:theme="@style/NoActionBar" />
         <activity android:name=".ui.activities.BookActivity" />
         <activity android:name=".ui.activities.BooksListActivity" />
+        <activity android:name=".ui.activities.Payment"
+            android:theme="@style/AppTheme"
+            />
 
     </application>
 

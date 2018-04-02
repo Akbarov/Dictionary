@@ -57,6 +57,11 @@ public class AudioRecyclerFragment extends Fragment {
         }
         itemClickListener = new ItemClickListener(position -> {
             Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+            if (adapter.getItem(position) instanceof Audio) {
+                Audio audio = (Audio) adapter.getItem(position);
+            } else if (adapter.getItem(position) instanceof Movie) {
+                Movie audio = (Movie) adapter.getItem(position);
+            }
 
         });
 
@@ -104,7 +109,6 @@ public class AudioRecyclerFragment extends Fragment {
                 }
             };
             recyclerView.setAdapterWithProgress(adapter);
-            adapter.setOnItemClickListener(itemClickListener);
             adapter.addAll(manager.getPhotoList());
             adapter.notifyDataSetChanged();
         }

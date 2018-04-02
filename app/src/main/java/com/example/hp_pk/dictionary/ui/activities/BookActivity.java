@@ -1,8 +1,12 @@
 package com.example.hp_pk.dictionary.ui.activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -53,6 +57,14 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
         setContentView(R.layout.book_layout);
         Dictionary.getAppComponent().inject(this);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123
+            );
+        }
+
         ButterKnife.bind(this);
         Log.d("book", "bookk");
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -61,20 +73,20 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
             if (book != null)
                 Log.d("book", book.toString());
             FileLoader.with(this)
-                        .load(book.getBookUrl())
-                        .fromDirectory("books", FileLoader.DIR_INTERNAL)
-                        .asFile(new FileRequestListener<File>() {
-                            @Override
-                            public void onLoad(FileLoadRequest request, FileResponse<File> response) {
-                                File loadedFile = response.getBody();
-                                readFromFile(loadedFile);
-                            }
+                    .load(book.getBookUrl())
+                    .fromDirectory("books", FileLoader.DIR_INTERNAL)
+                    .asFile(new FileRequestListener<File>() {
+                        @Override
+                        public void onLoad(FileLoadRequest request, FileResponse<File> response) {
+                            File loadedFile = response.getBody();
+                            readFromFile(loadedFile);
+                        }
 
-                            @Override
-                            public void onError(FileLoadRequest request, Throwable t) {
-                            }
-                        });
-        }else {
+                        @Override
+                        public void onError(FileLoadRequest request, Throwable t) {
+                        }
+                    });
+        } else {
             Log.d("book", "can't read");
         }
 //        AssetManager assetManager = getAssets();

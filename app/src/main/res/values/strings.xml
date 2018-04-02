@@ -24,5 +24,17 @@
     <string name="my_lesson">Lessons</string>
     <string name="test">Tests</string>
     <string name="payment">Payment</string>
+    <string name="pay"><b><i>Payment and Contract Issues</i></b> \n
+
+The sudent at the teaching center have several major responsibilities:\n
+
+To carry out the payment in the first week of every month\n
+To stop their participation in lessons if prolonged to more than ten days\n
+
+        <b><i>Student payment methods:</i></b>\n
+-in cash\n
+-by check\n
+-money transferring</string>
+
 
 </resources>

@@ -82,7 +82,7 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
         if (getIntent() != null) {
             this.category = getIntent().getStringExtra("category");
         }
-        setTitle("Books");
+        setTitle("Library");
 
         toolbar.setNavigationOnClickListener(v -> finish());
         createAdapter();

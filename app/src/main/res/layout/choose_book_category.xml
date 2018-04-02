@@ -10,26 +10,83 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/literature"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/literature"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/ielts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ielts"
-            android:elevation="4dp"
-            android:orientation="horizontal" />
+            android:elevation="6dp"
+            android:innerRadius="0dp"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/literature" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="#5d242524"
+                    android:gravity="center"
+                    android:text="Literature"
+                    android:textColor="@android:color/white"
+                    android:textSize="35sp" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ielts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:elevation="6dp"
+            android:innerRadius="0dp"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ielts" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="#5d242524"
+                    android:gravity="center"
+                    android:text="IELTS"
+                    android:textColor="@android:color/white"
+                    android:textSize="35sp" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
     <LinearLayout
@@ -38,25 +95,83 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/lessons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/subjects"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:id="@+id/journal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:background="@drawable/discover"
-            android:orientation="horizontal" />
+            android:elevation="6dp"
+            android:innerRadius="0dp"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/subjects" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="#5d242524"
+                    android:gravity="center"
+                    android:text="Textbooks"
+                    android:textColor="@android:color/white"
+                    android:textSize="35sp" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/journal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:elevation="6dp"
+            android:innerRadius="0dp"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/discover" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="bottom"
+                    android:background="#5d242524"
+                    android:gravity="center"
+                    android:text="Journals"
+                    android:textColor="@android:color/white"
+                    android:textSize="35sp" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 

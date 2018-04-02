@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.ui.activities.MyTutor;
 import com.example.hp_pk.dictionary.ui.activities.NavigationActivity;
+import com.example.hp_pk.dictionary.ui.activities.Payment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,24 +38,27 @@ public class TutorFragment extends Fragment {
         switch (view.getId()) {
             case R.id.extra:
                 category = getString(R.string.extra);
+                MyTutor.start(getContext(),category);
                 break;
 
             case R.id.test:
-                category = getString(R.string.test);
+//                category = getString(R.string.test);
+//                MyTutor.start(getContext(),category);
                 break;
 
             case R.id.lessons:
-                category = getString(R.string.my_lesson);
+//                category = getString(R.string.my_lesson);
+//                MyTutor.start(getContext(),category);
                 break;
 
             case R.id.payment:
                 category = getString(R.string.payment);
+                getContext().startActivity(new Intent(getContext(), Payment.class));
                 break;
             default:
                 category = getString(R.string.payment);
                 break;
         }
 
-        MyTutor.start(getContext(),category);
     }
 }

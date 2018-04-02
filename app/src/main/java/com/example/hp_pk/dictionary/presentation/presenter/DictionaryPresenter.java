@@ -11,6 +11,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.classes.WordClass;
+import com.example.hp_pk.dictionary.dialog.Translation;
 import com.example.hp_pk.dictionary.holder.WordViewHolder;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 import com.example.hp_pk.dictionary.listeners.OnItemClickListener;
@@ -39,6 +40,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
     private int offset = 0;
     private ItemClickListener itemClickListener;
     private OnItemClickListener favoriteItemListener;
+    private Context context;
 
     public DictionaryPresenter() {
         Dictionary.getAppComponent().inject(this);
@@ -47,7 +49,7 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
     }
 
     public RecyclerArrayAdapter<WordClass> getAdapter(Context context) {
-
+        this.context = context;
         adapter = new RecyclerArrayAdapter<WordClass>(context) {
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -69,6 +71,8 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             if (wordClass != null) {
                 access.updateLastUsedDate(wordClass.getId());
                 //show meaning here
+                Translation translation = new Translation(context, wordClass);
+                translation.show();
             }
 
         });
