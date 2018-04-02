@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <com.makeramen.roundedimageview.RoundedImageView
@@ -41,12 +42,9 @@
             android:textColor="@color/colorTextSecondary"
             android:textSize="16sp" />
 
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ic_file_download_black_24dp"
-            android:tint="@color/colorPrimary" />
+        <com.aloj.progress.DownloadProgressView
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
 
     </LinearLayout>
 

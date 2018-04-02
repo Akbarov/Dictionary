@@ -69,9 +69,9 @@ public class DatabaseAccess implements Constants {
         List<WordClass> list = new ArrayList<>();
         Cursor cursor;
         if (isFavorites) {
-            cursor = database.rawQuery("SELECT * FROM words where type =? and is_favorite =? order by word ASC limit 50 offset ?", new String[]{String.valueOf(type), String.valueOf(1), String.valueOf(offset)});
+            cursor = database.rawQuery("SELECT * FROM words where type =? and is_favorite =? order by word ASC", new String[]{String.valueOf(type), String.valueOf(1)});
         } else
-            cursor = database.rawQuery("SELECT * FROM words where type =? order by word ASC limit 50 offset ?", new String[]{String.valueOf(type), String.valueOf(offset)});
+            cursor = database.rawQuery("SELECT * FROM words where type =? order by word ASC", new String[]{String.valueOf(type)});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             list.add(new WordClass(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getLong(4), cursor.getInt(5) == 1));

@@ -20,5 +20,6 @@ public interface Constants {
     String LAST_BOOK_UPDATED = "last_book_updated";
     String LAST_MyTutor_UPDATED = "last_my_tutor_updated";
     String SIZE_OF_BOOKS = "size_of_books";
+    String LAST_UPDATE_NEWS = "last_update_news";
 
 }

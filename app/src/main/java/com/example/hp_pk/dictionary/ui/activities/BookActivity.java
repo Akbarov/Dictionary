@@ -3,11 +3,14 @@ package com.example.hp_pk.dictionary.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.database.Book;
+import com.example.hp_pk.dictionary.database.DbManager;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
@@ -22,6 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,11 +51,16 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_layout);
+        Dictionary.getAppComponent().inject(this);
+
         ButterKnife.bind(this);
+        Log.d("book", "bookk");
         if (getIntent() != null && getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable("book");
+            Log.d("book", " read");
             if (book != null)
-                FileLoader.with(this)
+                Log.d("book", book.toString());
+            FileLoader.with(this)
                         .load(book.getBookUrl())
                         .fromDirectory("books", FileLoader.DIR_INTERNAL)
                         .asFile(new FileRequestListener<File>() {
@@ -64,6 +74,8 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
                             public void onError(FileLoadRequest request, Throwable t) {
                             }
                         });
+        }else {
+            Log.d("book", "can't read");
         }
 //        AssetManager assetManager = getAssets();
 //        InputStream in = null;
@@ -118,12 +130,12 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        Toast.makeText(BookActivity.this, "Page changed", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(BookActivity.this, "Page changed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadComplete(int nbPages) {
-        Toast.makeText(BookActivity.this, "Completed", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(BookActivity.this, "Completed", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -21,13 +21,15 @@ import com.example.hp_pk.dictionary.ui.activities.fragments.TutorFragment;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String title = "News";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("News");
+        setTitle(title);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,6 +71,7 @@ public class NavigationActivity extends AppCompatActivity
                 if (fragment == null) {
                     fragment = new TutorFragment();
                 }
+                title = "My center";
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "tutor").commit();
                 break;
             case R.id.dictionary:
@@ -79,6 +82,7 @@ public class NavigationActivity extends AppCompatActivity
                 if (fragment == null) {
                     fragment = new ChooseBookCategory();
                 }
+                title = "Library";
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "books").commit();
                 break;
             case R.id.news:
@@ -86,10 +90,11 @@ public class NavigationActivity extends AppCompatActivity
                 if (fragment == null) {
                     fragment = new NewsFragment();
                 }
+                title = "News";
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, "news").commit();
                 break;
         }
-
+        setTitle(title);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

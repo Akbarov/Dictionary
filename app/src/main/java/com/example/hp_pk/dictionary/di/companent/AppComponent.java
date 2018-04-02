@@ -7,9 +7,12 @@ import com.example.hp_pk.dictionary.presentation.presenter.BooksListPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.DictionaryPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MainPresenter;
 import com.example.hp_pk.dictionary.presentation.presenter.MyTutorPresenter;
+import com.example.hp_pk.dictionary.ui.activities.BookActivity;
 import com.example.hp_pk.dictionary.ui.activities.DictionaryActivity;
 import com.example.hp_pk.dictionary.ui.activities.fragments.AudioRecyclerFragment;
+import com.example.hp_pk.dictionary.ui.activities.fragments.NewsFragment;
 import com.example.hp_pk.dictionary.ui.activities.fragments.RecyclerFragment;
+import com.example.hp_pk.dictionary.ui.activities.fragments.SubjectFragment;
 
 import javax.inject.Singleton;
 
@@ -39,7 +42,13 @@ public interface AppComponent {
 
     void inject(RecyclerFragment fragment);
 
+    void inject(NewsFragment fragment);
+
+    void inject(BookActivity activity);
+
     void inject(AudioRecyclerFragment fragment);
+
+    void inject(SubjectFragment fragment);
 
 
     @Component.Builder

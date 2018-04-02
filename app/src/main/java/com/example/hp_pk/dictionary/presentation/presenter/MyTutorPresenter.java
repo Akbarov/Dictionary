@@ -1,19 +1,19 @@
 package com.example.hp_pk.dictionary.presentation.presenter;
 
-import android.util.Log;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
+import com.example.hp_pk.dictionary.adapters.LessonViewPagerAdapter;
 import com.example.hp_pk.dictionary.adapters.MyTutorViewPagerAdapter;
-import com.example.hp_pk.dictionary.adapters.MyViewPagerAdapter;
 import com.example.hp_pk.dictionary.database.Audio;
-import com.example.hp_pk.dictionary.database.Book;
 import com.example.hp_pk.dictionary.database.Categories;
 import com.example.hp_pk.dictionary.database.DbManager;
+import com.example.hp_pk.dictionary.database.LessonItem;
 import com.example.hp_pk.dictionary.database.Movie;
 import com.example.hp_pk.dictionary.database.Photo;
-import com.example.hp_pk.dictionary.listeners.ItemClickListener;
+import com.example.hp_pk.dictionary.database.TestItem;
 import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.view.BooksListView;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import javax.inject.Inject;
 
@@ -51,14 +50,20 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
 
     public void updateBooksFromServer(String category) {
         this.category = category;
-//        if (!needToUpdate(category)) return;
+        if (!needToUpdate(category)) return;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("My Center/" + category);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                parseMyTutorObject(dataSnapshot);
+                if ("Extracurricular".equals(category)) {
+                    parseExtracurricular(dataSnapshot);
+                } else if ("Lessons".equals(category)) {
+                    parseLessons(dataSnapshot);
+                } else if ("Tests".equals(category)) {
+                    parseTest(dataSnapshot);
+                }
                 if (pref.getLastBookUpdated(category) == 0) {
                     stateView.updateCategories();
                 }
@@ -72,7 +77,7 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
         });
     }
 
-    private void parseMyTutorObject(DataSnapshot dataSnapshot) {
+    private void parseExtracurricular(DataSnapshot dataSnapshot) {
         int count = 0;
         for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
             count = 0;
@@ -82,8 +87,6 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
                 parseMovies(categorySnapshot);
             } else if ("Photo Albums".equals(categorySnapshot.getKey())) {
                 parsePhotos(categorySnapshot);
-            } else if ("Lessons".equals(categorySnapshot.getKey())) {
-                parseLessons(categorySnapshot);
             }
             Categories categories = new Categories(categorySnapshot.getKey(), count, category);
             manager.setCategory(categories);
@@ -96,12 +99,41 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
     }
 
     private void parseLessons(DataSnapshot lessonsSnapshot) {
+        for (DataSnapshot subject : lessonsSnapshot.getChildren()) {
+            for (DataSnapshot level : subject.getChildren()) {
+                for (DataSnapshot lesson : level.getChildren()) {
+                    for (DataSnapshot item : lesson.getChildren()) {
+                        LessonItem lessonItem = item.getValue(LessonItem.class);
+                        if (lessonItem != null) {
+                            lessonItem.setLesson(lesson.getKey());
+                            lessonItem.setLevel(level.getKey());
+                            lessonItem.setSubject(subject.getKey());
+                            manager.setLessonItem(lessonItem);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private void parseTest(DataSnapshot lessonsSnapshot) {
+        for (DataSnapshot subject : lessonsSnapshot.getChildren()) {
+            for (DataSnapshot level : subject.getChildren()) {
+                for (DataSnapshot item : level.getChildren()) {
+                    TestItem testItem = item.getValue(TestItem.class);
+                    if (testItem != null) {
+                        testItem.setLevel(level.getKey());
+                        testItem.setSubject(subject.getKey());
+                        manager.setTestItem(testItem);
+                    }
+                }
+            }
+        }
     }
 
     private void parsePhotos(DataSnapshot photoSnapshot) {
         for (DataSnapshot item : photoSnapshot.getChildren()) {
-            Photo photo = photoSnapshot.getValue(Photo.class);
+            Photo photo = item.getValue(Photo.class);
             photo.setId(item.getKey());
             manager.setPhoto(photo);
         }
@@ -118,13 +150,17 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
     private void parseAudios(DataSnapshot audioSnapshot) {
         for (DataSnapshot item : audioSnapshot.getChildren()) {
             Audio audio = item.getValue(Audio.class);
+            assert audio != null;
             audio.setId(item.getKey());
             manager.setAudio(audio);
         }
     }
 
-    public MyTutorViewPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
-        return new MyTutorViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
+    public FragmentPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
+        if (category.equals("Lessons")) {
+            return new LessonViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
+        } else
+            return new MyTutorViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
     }
 
     public boolean hasCategory() {

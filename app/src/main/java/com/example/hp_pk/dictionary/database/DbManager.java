@@ -61,7 +61,7 @@ public class DbManager {
     }
 
     public List<Book> getBooksByCategory(String category) {
-        return session.getBookDao().queryRaw("WHERE T.CATEGORY =?", category.toLowerCase());
+        return session.getBookDao().queryRaw("WHERE T.CATEGORY =?", category);
     }
 
     public List<Book> getBookByNameOrAuthor(String text) {
@@ -88,6 +88,14 @@ public class DbManager {
         return session.getAudioDao().loadAll();
     }
 
+    public void setNews(News audio) {
+        session.getNewsDao().insertOrReplace(audio);
+    }
+
+    public List<News> getNewsList() {
+        return session.getNewsDao().loadAll();
+    }
+
     public void setMovie(Movie movie) {
         session.getMovieDao().insertOrReplace(movie);
     }
@@ -102,6 +110,22 @@ public class DbManager {
 
     public List<Photo> getPhotoList() {
         return session.getPhotoDao().loadAll();
+    }
+
+    public void setLessonItem(LessonItem lessonItem) {
+        session.getLessonItemDao().insertOrReplace(lessonItem);
+    }
+
+    public List<LessonItem> getLessonItems() {
+        return session.getLessonItemDao().loadAll();
+    }
+
+    public List<TestItem> getTestItem() {
+        return session.getTestItemDao().loadAll();
+    }
+
+    public void setTestItem(TestItem testItem) {
+        session.getTestItemDao().insertOrReplace(testItem);
     }
 
     public List<Categories> getCategories() {

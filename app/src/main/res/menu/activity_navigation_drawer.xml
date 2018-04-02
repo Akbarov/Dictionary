@@ -7,12 +7,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/news"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
             android:id="@+id/my_tutor"
             android:icon="@drawable/ic_menu_camera"
-            android:title="My Tutor" />
+            android:title="My Center" />
         <item
             android:id="@+id/dictionary"
             android:icon="@drawable/ic_menu_dictionary"

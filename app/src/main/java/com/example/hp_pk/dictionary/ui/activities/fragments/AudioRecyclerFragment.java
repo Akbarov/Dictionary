@@ -13,22 +13,18 @@ import android.widget.Toast;
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.database.Audio;
-import com.example.hp_pk.dictionary.database.Book;
 import com.example.hp_pk.dictionary.database.DbManager;
 import com.example.hp_pk.dictionary.database.Movie;
+import com.example.hp_pk.dictionary.database.Photo;
 import com.example.hp_pk.dictionary.holder.AudioViewHolder;
-import com.example.hp_pk.dictionary.holder.BookViewHolder;
+import com.example.hp_pk.dictionary.holder.PhotoViewHolder;
 import com.example.hp_pk.dictionary.holder.VideoViewHolder;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
-import com.example.hp_pk.dictionary.ui.activities.BookActivity;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author Zohidjon
@@ -99,6 +95,17 @@ public class AudioRecyclerFragment extends Fragment {
             recyclerView.setAdapterWithProgress(adapter);
             adapter.setOnItemClickListener(itemClickListener);
             adapter.addAll(manager.getMovieList());
+            adapter.notifyDataSetChanged();
+        } else if (category.equals("Photo Albums")) {
+            adapter = new RecyclerArrayAdapter<Photo>(getContext()) {
+                @Override
+                public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+                    return new PhotoViewHolder(parent, getContext());
+                }
+            };
+            recyclerView.setAdapterWithProgress(adapter);
+            adapter.setOnItemClickListener(itemClickListener);
+            adapter.addAll(manager.getPhotoList());
             adapter.notifyDataSetChanged();
         }
     }

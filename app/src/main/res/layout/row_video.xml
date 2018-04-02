@@ -30,9 +30,12 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
+                android:layout_height="match_parent">
 
+                <com.aloj.progress.DownloadProgressView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center" />
 
             </FrameLayout>
         </FrameLayout>

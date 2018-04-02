@@ -41,12 +41,10 @@
             android:textColor="@color/colorTextSecondary"
             android:textSize="16sp" />
 
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_file_download_black_24dp" />
+        <com.aloj.progress.DownloadProgressView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

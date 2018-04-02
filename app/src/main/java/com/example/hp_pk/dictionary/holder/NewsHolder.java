@@ -1,6 +1,7 @@
 package com.example.hp_pk.dictionary.holder;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,8 +10,6 @@ import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.database.News;
 import com.example.hp_pk.dictionary.model.GlideApp;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
-
-import java.text.DateFormat;
 
 /**
  * @author Zohidjon
@@ -41,10 +40,19 @@ public class NewsHolder extends BaseViewHolder<News> {
         super.setData(data);
         header.setText(data.getHeader());
         description.setText(data.getDescription());
+        likeNumber.setText(String.valueOf(data.getLikeNumber()));
         GlideApp.with(context)
                 .load(data.getImageUrl())
                 .centerCrop()
                 .placeholder(R.drawable.time_edu)
                 .into(baseImage);
+        date.setText(DateFormat.format("yyyy-MM-dd hh:mm", data.getDate()));
+        likeYou.setOnClickListener(view -> {
+            if (!data.getLikeYou()) {
+                data.setLikeYou(true);
+                data.setLikeNumber(data.getLikeNumber() + 1);
+                likeNumber.setText(String.valueOf(data.getLikeNumber()));
+            }
+        });
     }
 }

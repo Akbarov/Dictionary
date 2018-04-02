@@ -19,7 +19,7 @@ public class BookViewHolder extends BaseViewHolder<Book> {
 
     private Context context;
     private RoundedImageView bookImage;
-    private TextView bookName, bookAuthor;
+    private TextView bookName, bookAuthor, size, rate;
 
     public BookViewHolder(ViewGroup parent, Context context) {
         super(parent, R.layout.row_book);
@@ -27,6 +27,8 @@ public class BookViewHolder extends BaseViewHolder<Book> {
         bookImage = $(R.id.book_image);
         bookName = $(R.id.book_name);
         bookAuthor = $(R.id.book_author);
+        size = $(R.id.size);
+        rate = $(R.id.rate);
 
     }
 
@@ -36,9 +38,13 @@ public class BookViewHolder extends BaseViewHolder<Book> {
         GlideApp.with(context)
                 .load(data.getImageUrl())
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.book)
                 .into(bookImage);
         bookName.setText(data.getName());
         bookAuthor.setText(data.getAuthor());
+        size.setText(data.getSize());
+        rate.setText(String.valueOf(data.getRate() != 0 ? data.getRate() : "4.5"));
+
     }
+
 }

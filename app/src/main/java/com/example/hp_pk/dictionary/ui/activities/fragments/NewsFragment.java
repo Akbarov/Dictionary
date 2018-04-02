@@ -9,15 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
+import com.example.hp_pk.dictionary.database.DbManager;
 import com.example.hp_pk.dictionary.database.News;
 import com.example.hp_pk.dictionary.holder.NewsHolder;
+import com.example.hp_pk.dictionary.manager.PrefManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,12 +38,53 @@ public class NewsFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     EasyRecyclerView recyclerView;
+    @Inject
+    DbManager manager;
+    @Inject
+    PrefManager pref;
     private RecyclerArrayAdapter<News> adapter;
+    private long updatedLimit = 86400000; // 1 day
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Dictionary.getAppComponent().inject(this);
         createAdapter();
+        if (System.currentTimeMillis() - pref.getLanguageType() > updatedLimit) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference reference = database.getReference("news");
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot newsObject : dataSnapshot.getChildren()) {
+                        News news = newsObject.getValue(News.class);
+                        if (news != null) {
+                            news.setId(newsObject.getKey());
+                            news.setLikeYou(false);
+                        }
+                        manager.setNews(news);
+                        updateAdapter();
+                    }
+                    pref.setLastUpdateNews(System.currentTimeMillis());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            updateAdapter();
+        }
+    }
+
+    private void updateAdapter() {
+        adapter.clear();
+        adapter.addAll(manager.getNewsList());
+        adapter.notifyDataSetChanged();
     }
 
     @Nullable
@@ -52,12 +100,6 @@ public class NewsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapterWithProgress(adapter);
-        List<News> newsList = new ArrayList<>();
-        newsList.add(new News());
-        newsList.add(new News());
-        newsList.add(new News());
-        adapter.addAll(newsList);
-        adapter.notifyDataSetChanged();
     }
 
     private void createAdapter() {

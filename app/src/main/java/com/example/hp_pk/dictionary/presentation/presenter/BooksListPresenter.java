@@ -53,6 +53,8 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
         } else {
             searchWithFilter("");
         }
+//        updateBooksFromServer();
+
     }
 
     private void updateBooksFromServer() {
@@ -67,8 +69,9 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
                     for (DataSnapshot bookSnapshot : snapshot.getChildren()) {
                         Book book = bookSnapshot.getValue(Book.class);
                         if (book != null) {
-                            book.setBookKey(snapshot.getKey());
+                            book.setBookKey(bookSnapshot.getKey());
                             book.setMainCategory(bookCategory);
+                            book.setCategory(snapshot.getKey());
                         }
                         manager.setBook(book);
                         count++;
