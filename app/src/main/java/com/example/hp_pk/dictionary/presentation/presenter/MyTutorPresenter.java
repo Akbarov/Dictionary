@@ -1,6 +1,6 @@
 package com.example.hp_pk.dictionary.presentation.presenter;
 
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -15,7 +15,7 @@ import com.example.hp_pk.dictionary.database.Movie;
 import com.example.hp_pk.dictionary.database.Photo;
 import com.example.hp_pk.dictionary.database.TestItem;
 import com.example.hp_pk.dictionary.manager.PrefManager;
-import com.example.hp_pk.dictionary.presentation.view.BooksListView;
+import com.example.hp_pk.dictionary.presentation.view.MyTutorView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,13 +29,13 @@ import javax.inject.Inject;
  * @since 2/12/18.
  */
 @InjectViewState
-public class MyTutorPresenter extends MvpPresenter<BooksListView> {
+public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
 
     @Inject
     DbManager manager;
     @Inject
     PrefManager pref;
-    private BooksListView stateView;
+    private MyTutorView stateView;
     private long updatedLimit = 86400000; // 1 day
     private String category;
 
@@ -50,7 +50,7 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
 
     public void updateBooksFromServer(String category) {
         this.category = category;
-        if (!needToUpdate(category)) return;
+//        if (!needToUpdate(category)) return;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("My Center/" + category);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -65,8 +65,9 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
                     parseTest(dataSnapshot);
                 }
                 if (pref.getLastBookUpdated(category) == 0) {
-                    stateView.updateCategories();
+                    pref.setLastMyTutorUpdated(category, System.currentTimeMillis());
                 }
+                getViewState().setUpPager();
                 pref.setLastMyTutorUpdated(category, System.currentTimeMillis());
             }
 
@@ -91,15 +92,14 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
             Categories categories = new Categories(categorySnapshot.getKey(), count, category);
             manager.setCategory(categories);
         }
-
-        if (pref.getLastBookUpdated(category) == 0) {
-            stateView.updateCategories();
-        }
-        pref.setLastBookUpdated(category, System.currentTimeMillis());
     }
 
     private void parseLessons(DataSnapshot lessonsSnapshot) {
         for (DataSnapshot subject : lessonsSnapshot.getChildren()) {
+            Categories categories = new Categories();
+            categories.setName(subject.getKey());
+            categories.setMainCategory(lessonsSnapshot.getKey());
+            manager.setCategory(categories);
             for (DataSnapshot level : subject.getChildren()) {
                 for (DataSnapshot lesson : level.getChildren()) {
                     for (DataSnapshot item : lesson.getChildren()) {
@@ -156,11 +156,12 @@ public class MyTutorPresenter extends MvpPresenter<BooksListView> {
         }
     }
 
-    public FragmentPagerAdapter getPagerAdapter(android.support.v4.app.FragmentManager fragmentManager) {
+    public void setPagerAdapter(FragmentManager fragmentManager) {
         if (category.equals("Lessons")) {
-            return new LessonViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
-        } else
-            return new MyTutorViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category));
+            getViewState().setAdapter(new LessonViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category)));
+        } else {
+            getViewState().setAdapter(new MyTutorViewPagerAdapter(fragmentManager, manager.getCategoriesByMainCategory(category)));
+        }
     }
 
     public boolean hasCategory() {

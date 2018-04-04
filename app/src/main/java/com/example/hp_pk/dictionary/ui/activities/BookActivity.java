@@ -1,6 +1,7 @@
 package com.example.hp_pk.dictionary.ui.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
 
     @BindView(R.id.pdfView)
     PDFView pdfView;
+    private ProgressDialog progressDialog;
 
     public static void start(Context context, Book book) {
         Intent intent = new Intent(context, BookActivity.class);
@@ -64,9 +66,13 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123
             );
         }
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
+        progressDialog.show();
         ButterKnife.bind(this);
-        Log.d("book", "bookk");
         if (getIntent() != null && getIntent().getExtras() != null) {
             Book book = getIntent().getExtras().getParcelable("book");
             Log.d("book", " read");
@@ -79,14 +85,17 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
                         @Override
                         public void onLoad(FileLoadRequest request, FileResponse<File> response) {
                             File loadedFile = response.getBody();
+                            progressDialog.dismiss();
                             readFromFile(loadedFile);
                         }
 
                         @Override
                         public void onError(FileLoadRequest request, Throwable t) {
+                            Toast.makeText(BookActivity.this, "Sorry this book can't loaded", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
+            Toast.makeText(this, "Sorry this book can't loaded", Toast.LENGTH_SHORT).show();
             Log.d("book", "can't read");
         }
 //        AssetManager assetManager = getAssets();
@@ -126,6 +135,12 @@ public class BookActivity extends MvpAppCompatActivity implements OnPageChangeLi
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        progressDialog.dismiss();
     }
 
     private void readFromFile(File file) {

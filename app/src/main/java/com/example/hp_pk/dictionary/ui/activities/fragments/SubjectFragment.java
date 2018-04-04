@@ -4,19 +4,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
 
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.R;
-import com.example.hp_pk.dictionary.database.Book;
+import com.example.hp_pk.dictionary.adapters.MyExpandableAdapter;
+import com.example.hp_pk.dictionary.classes.LevelGroup;
 import com.example.hp_pk.dictionary.database.DbManager;
+import com.example.hp_pk.dictionary.database.LessonItem;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
-import com.example.hp_pk.dictionary.ui.activities.BookActivity;
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,7 +39,8 @@ public class SubjectFragment extends Fragment {
     ExpandableListView expandableListView;
     private String category;
     private ItemClickListener itemClickListener;
-    private RecyclerArrayAdapter<Book> adapter;
+    @BindView(R.id.loading)
+    ProgressBar progressBar;
 
     public static SubjectFragment newInstance(String category) {
         SubjectFragment fragment = new SubjectFragment();
@@ -51,14 +55,8 @@ public class SubjectFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Dictionary.getAppComponent().inject(this);
         if (getArguments() != null) {
-            this.category = getArguments().getString("category");
+            category = getArguments().getString("category");
         }
-        itemClickListener = new ItemClickListener(position -> {
-            BookActivity.start(getContext(), adapter.getItem(position));
-            Log.d("book", adapter.getItem(position).toString());
-
-        });
-
     }
 
     @Nullable
@@ -72,5 +70,26 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        List<LessonItem> lessonItems = manager.getLessonItems();
+        String level = "";
+        List<LevelGroup> levelGroupList = new ArrayList<>();
+        LevelGroup group = new LevelGroup();
+        for (LessonItem item : lessonItems) {
+            String just = item.getLevel();
+            if (level.equals(just)) {
+                group.addLesson(item.getLesson());
+            } else {
+                level = item.getLevel();
+                group = new LevelGroup();
+                group.setLevel(level);
+                levelGroupList.add(group);
+            }
+        }
+        if (levelGroupList.size() > 0) {
+            progressBar.setVisibility(View.GONE);
+        }
+        MyExpandableAdapter adapter = new MyExpandableAdapter(getContext(), levelGroupList);
+        expandableListView.setAdapter(adapter);
+
     }
 }

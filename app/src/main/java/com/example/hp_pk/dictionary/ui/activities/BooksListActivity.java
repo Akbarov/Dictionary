@@ -1,5 +1,6 @@
 package com.example.hp_pk.dictionary.ui.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
     ProgressBar progressBar;
 
     private String category;
+    private ProgressDialog progressDialog;
 
     public static void start(Context context) {
         context.startActivity(new Intent(context, BooksListActivity.class));
@@ -85,12 +87,21 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
         setTitle("Library");
 
         toolbar.setNavigationOnClickListener(v -> finish());
+
         createAdapter();
         setUpPager();
         searchView.setOnSearchViewListener(this);
         searchView.setOnQueryTextListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setVisibility(View.GONE);
+    }
+
+    private void createDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Loading");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
     }
 
     public void setUpPager() {
@@ -100,7 +111,7 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
             progressBar.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
         }
     }
 

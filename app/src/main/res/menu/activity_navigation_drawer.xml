@@ -11,7 +11,7 @@
             android:title="Home" />
         <item
             android:id="@+id/my_tutor"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="My Center" />
         <item
             android:id="@+id/dictionary"
@@ -26,17 +26,5 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Setting" />
     </group>
-    <group
-        android:checkableBehavior="single"
-        android:menuCategory="secondary">
-        <item
-            android:id="@+id/share"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Share"
-            app:showAsAction="always" />
-
-
-    </group>
-
 
 </menu>

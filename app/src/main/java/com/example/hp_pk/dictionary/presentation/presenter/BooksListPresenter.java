@@ -80,10 +80,12 @@ public class BooksListPresenter extends MvpPresenter<BooksListView> {
                     manager.setCategory(categories);
                 }
                 if (pref.getLastBookUpdated(bookCategory) == 0) {
+                    pref.setLastBookUpdated(bookCategory, System.currentTimeMillis());
                     stateView.updateCategories();
+                } else {
+                    pref.setLastBookUpdated(bookCategory, System.currentTimeMillis());
                 }
                 searchWithFilter("");
-                pref.setLastBookUpdated(bookCategory, System.currentTimeMillis());
             }
 
             @Override

@@ -9,14 +9,14 @@
     <uses-permission
         android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
+
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Dictionary"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
@@ -36,9 +36,9 @@
             android:theme="@style/NoActionBar" />
         <activity android:name=".ui.activities.BookActivity" />
         <activity android:name=".ui.activities.BooksListActivity" />
-        <activity android:name=".ui.activities.Payment"
-            android:theme="@style/AppTheme"
-            />
+        <activity
+            android:name=".ui.activities.Payment"
+            android:theme="@style/AppTheme" />
 
     </application>
 
