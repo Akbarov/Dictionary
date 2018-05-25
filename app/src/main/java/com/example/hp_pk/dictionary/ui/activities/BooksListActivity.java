@@ -89,6 +89,7 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
         toolbar.setNavigationOnClickListener(v -> finish());
 
         createAdapter();
+        createDialog();
         setUpPager();
         searchView.setOnSearchViewListener(this);
         searchView.setOnQueryTextListener(this);
@@ -109,9 +110,22 @@ public class BooksListActivity extends MvpAppCompatActivity implements BooksList
             tabLayout.setupWithViewPager(pager);
             pager.setAdapter(presenter.getPagerAdapter(getSupportFragmentManager()));
             progressBar.setVisibility(View.GONE);
+            hideDialog();
             recyclerView.setVisibility(View.GONE);
         } else {
+            showDialog();
+        }
+    }
+
+    private void showDialog() {
+        if (progressDialog != null) {
             progressDialog.show();
+        }
+    }
+
+    private void hideDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
     }
 

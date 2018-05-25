@@ -19,6 +19,8 @@ import com.example.hp_pk.dictionary.database.LessonItem;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,10 +76,13 @@ public class SubjectFragment extends Fragment {
         String level = "";
         List<LevelGroup> levelGroupList = new ArrayList<>();
         LevelGroup group = new LevelGroup();
+        String lessonName = "";
         for (LessonItem item : lessonItems) {
             String just = item.getLevel();
-            if (level.equals(just)) {
-                group.addLesson(item.getLesson());
+            if (level.contains(just)) {
+                if (!lessonName.equals(item.getLesson()))
+                    group.addLesson(item.getLesson());
+                lessonName = item.getLesson();
             } else {
                 level = item.getLevel();
                 group = new LevelGroup();

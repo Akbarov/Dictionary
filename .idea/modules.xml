@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\GeekPro\MyDictionary\Dictionary.iml" filepath="D:\GeekPro\MyDictionary\Dictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Dictionary.iml" filepath="$PROJECT_DIR$/.idea/Dictionary.iml" />
+      <module fileurl="file://D:/GeekPro/MyDictionary/Dictionary.iml" filepath="D:/GeekPro/MyDictionary/Dictionary.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/MyDictionary.iml" filepath="$PROJECT_DIR$/.idea/MyDictionary.iml" />
+      <module fileurl="file://D:/GeekPro/MyDictionary/.idea/NewDictionary.iml" filepath="D:/GeekPro/MyDictionary/.idea/NewDictionary.iml" />
       <module fileurl="file://$PROJECT_DIR$/NewDictionary.iml" filepath="$PROJECT_DIR$/NewDictionary.iml" />
-      <module fileurl="file://D:\GeekPro\MyDictionary\.idea\NewDictionary.iml" filepath="D:\GeekPro\MyDictionary\.idea\NewDictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

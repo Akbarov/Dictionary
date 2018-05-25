@@ -49,7 +49,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return groupItemList.get(i).getLessons().size();
+        return groupItemList.get(i).getLessonList().size();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groupItemList.get(groupPosition).getLessons().get(childPosition);
+        return groupItemList.get(groupPosition).getLessonList().get(childPosition);
     }
 
     @Override

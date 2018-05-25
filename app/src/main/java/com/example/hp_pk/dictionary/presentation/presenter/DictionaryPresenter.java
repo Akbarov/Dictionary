@@ -11,7 +11,6 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.hp_pk.dictionary.Dictionary;
 import com.example.hp_pk.dictionary.classes.WordClass;
-import com.example.hp_pk.dictionary.dialog.Translation;
 import com.example.hp_pk.dictionary.holder.WordViewHolder;
 import com.example.hp_pk.dictionary.listeners.ItemClickListener;
 import com.example.hp_pk.dictionary.listeners.OnItemClickListener;
@@ -71,8 +70,8 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             if (wordClass != null) {
                 access.updateLastUsedDate(wordClass.getId());
                 //show meaning here
-                Translation translation = new Translation(context, wordClass);
-                translation.show();
+//                Translation translation = new Translation(context, wordClass);
+//                translation.show();
             }
 
         });
