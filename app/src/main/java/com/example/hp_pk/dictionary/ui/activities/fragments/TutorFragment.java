@@ -42,8 +42,8 @@ public class TutorFragment extends Fragment {
                 break;
 
             case R.id.test:
-//                category = getString(R.string.test);
-//                MyTutor.start(getContext(),category);
+                category = getString(R.string.test);
+                MyTutor.start(getContext(),category);
                 break;
 
             case R.id.lessons:

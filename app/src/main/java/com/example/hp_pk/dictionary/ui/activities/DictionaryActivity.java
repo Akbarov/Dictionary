@@ -113,7 +113,6 @@ public class DictionaryActivity extends MvpAppCompatActivity implements Dictiona
 
     @Override
     public void favoriteButtonPressed(boolean isFavoritesShown) {
-        Toast.makeText(this, "Pressed", Toast.LENGTH_SHORT).show();
         favoriteIcon.setImageResource(isFavoritesShown ? R.drawable.ic_star_half_24dp : R.drawable.ic_star_24dp);
     }
 

@@ -13,6 +13,7 @@ import com.example.hp_pk.dictionary.ui.activities.fragments.AudioRecyclerFragmen
 import com.example.hp_pk.dictionary.ui.activities.fragments.NewsFragment;
 import com.example.hp_pk.dictionary.ui.activities.fragments.RecyclerFragment;
 import com.example.hp_pk.dictionary.ui.activities.fragments.SubjectFragment;
+import com.example.hp_pk.dictionary.ui.activities.fragments.TestFragment;
 
 import javax.inject.Singleton;
 
@@ -49,6 +50,8 @@ public interface AppComponent {
     void inject(AudioRecyclerFragment fragment);
 
     void inject(SubjectFragment fragment);
+
+    void inject(TestFragment fragment);
 
 
     @Component.Builder

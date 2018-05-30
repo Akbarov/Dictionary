@@ -1,5 +1,7 @@
 package com.example.hp_pk.dictionary.database;
 
+import com.google.gson.annotations.Expose;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
@@ -21,12 +23,16 @@ public class Movie {
 
     private String imageUrl;
 
-    @Generated(hash = 1066588246)
-    public Movie(String id, String downloadUrl, String name, String imageUrl) {
+    private int downloadState; //-1 no downloaded, 0 downloading,1downloaded
+
+    @Generated(hash = 1947736616)
+    public Movie(String id, String downloadUrl, String name, String imageUrl,
+            int downloadState) {
         this.id = id;
         this.downloadUrl = downloadUrl;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.downloadState = downloadState;
     }
 
     @Generated(hash = 1263461133)
@@ -63,6 +69,14 @@ public class Movie {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public int getDownloadState() {
+        return this.downloadState;
+    }
+
+    public void setDownloadState(int downloadState) {
+        this.downloadState = downloadState;
     }
 
 

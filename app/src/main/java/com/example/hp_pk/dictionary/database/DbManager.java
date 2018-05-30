@@ -120,8 +120,16 @@ public class DbManager {
         return session.getLessonItemDao().loadAll();
     }
 
+    public List<LessonItem> getLessonItemsBySubject(String subject) {
+        return session.getLessonItemDao().queryRaw("WHERE T.SUBJECT =?", subject);
+    }
+
     public List<TestItem> getTestItem() {
         return session.getTestItemDao().loadAll();
+    }
+
+    public List<TestItem> getTestItemBySubject(String subject) {
+        return session.getTestItemDao().queryRaw("WHERE T.SUBJECT =?", subject);
     }
 
     public void setTestItem(TestItem testItem) {

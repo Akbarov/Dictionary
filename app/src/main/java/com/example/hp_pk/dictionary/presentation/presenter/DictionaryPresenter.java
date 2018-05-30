@@ -17,6 +17,7 @@ import com.example.hp_pk.dictionary.listeners.OnItemClickListener;
 import com.example.hp_pk.dictionary.manager.DatabaseAccess;
 import com.example.hp_pk.dictionary.manager.PrefManager;
 import com.example.hp_pk.dictionary.presentation.view.DictionaryView;
+import com.example.hp_pk.dictionary.utils.Translation;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 
@@ -70,8 +71,8 @@ public class DictionaryPresenter extends MvpPresenter<DictionaryView> {
             if (wordClass != null) {
                 access.updateLastUsedDate(wordClass.getId());
                 //show meaning here
-//                Translation translation = new Translation(context, wordClass);
-//                translation.show();
+                Translation translation = new Translation(context, wordClass);
+                translation.show();
             }
 
         });

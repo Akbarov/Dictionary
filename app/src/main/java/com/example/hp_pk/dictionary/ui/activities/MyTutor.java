@@ -16,6 +16,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.hp_pk.dictionary.R;
 import com.example.hp_pk.dictionary.adapters.LessonViewPagerAdapter;
 import com.example.hp_pk.dictionary.adapters.MyTutorViewPagerAdapter;
+import com.example.hp_pk.dictionary.adapters.TestViewPagerAdapter;
 import com.example.hp_pk.dictionary.database.Book;
 import com.example.hp_pk.dictionary.presentation.presenter.MyTutorPresenter;
 import com.example.hp_pk.dictionary.presentation.view.MyTutorView;
@@ -81,7 +82,6 @@ public class MyTutor extends MvpAppCompatActivity implements MyTutorView {
         toolbar.setNavigationOnClickListener(v -> finish());
         presenter.updateBooksFromServer(category);
         createDialog();
-        setUpPager();
     }
 
     private void createDialog() {
@@ -89,18 +89,13 @@ public class MyTutor extends MvpAppCompatActivity implements MyTutorView {
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Loading");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setProgress(0);
+        progressDialog.show();
     }
 
     @Override
     public void setUpPager() {
-        if (presenter.hasCategory()) {
-            tabLayout.setupWithViewPager(pager);
             presenter.setPagerAdapter(getSupportFragmentManager());
             progressDialog.hide();
-        } else {
-            progressDialog.show();
-        }
     }
 
     @Override
@@ -122,10 +117,18 @@ public class MyTutor extends MvpAppCompatActivity implements MyTutorView {
     @Override
     public void setAdapter(LessonViewPagerAdapter adapter) {
         pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
     }
 
     @Override
     public void setAdapter(MyTutorViewPagerAdapter adapter) {
         pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
+    }
+
+    @Override
+    public void setAdapter(TestViewPagerAdapter adapter) {
+        pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
     }
 }

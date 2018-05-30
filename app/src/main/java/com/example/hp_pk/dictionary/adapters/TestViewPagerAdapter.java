@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.hp_pk.dictionary.database.Categories;
 import com.example.hp_pk.dictionary.ui.activities.fragments.SubjectFragment;
+import com.example.hp_pk.dictionary.ui.activities.fragments.TestFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
  * @since 2018, March 21
  */
 
-public class LessonViewPagerAdapter extends FragmentPagerAdapter {
+public class TestViewPagerAdapter extends FragmentPagerAdapter {
     private int count;
     private List<Categories> categoriesList;
 
-    public LessonViewPagerAdapter(FragmentManager fm, List<Categories> categoryList) {
+    public TestViewPagerAdapter(FragmentManager fm, List<Categories> categoryList) {
         super(fm);
         if (categoryList != null) {
             this.count = categoryList.size();
@@ -34,7 +35,7 @@ public class LessonViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         String categoryName = (String) getPageTitle(position);
-        return SubjectFragment.newInstance(categoryName);
+        return TestFragment.newInstance(categoryName);
     }
 
     @Override

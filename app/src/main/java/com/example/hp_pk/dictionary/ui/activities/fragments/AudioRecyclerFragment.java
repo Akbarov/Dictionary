@@ -59,8 +59,10 @@ public class AudioRecyclerFragment extends Fragment {
             Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
             if (adapter.getItem(position) instanceof Audio) {
                 Audio audio = (Audio) adapter.getItem(position);
+                Toast.makeText(getContext(), audio.getDownloadUrl(), Toast.LENGTH_SHORT).show();
+
             } else if (adapter.getItem(position) instanceof Movie) {
-                Movie audio = (Movie) adapter.getItem(position);
+                Movie movie = (Movie) adapter.getItem(position);
             }
 
         });

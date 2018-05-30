@@ -4,6 +4,7 @@
     package="com.example.hp_pk.dictionary">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission
@@ -21,6 +22,7 @@
         android:theme="@style/NoActionBar">
         <activity
             android:name=".ui.activities.NavigationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,14 +32,21 @@
         </activity>
         <activity
             android:name=".ui.activities.DictionaryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".ui.activities.MyTutor"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".ui.activities.BookActivity" />
-        <activity android:name=".ui.activities.BooksListActivity" />
+        <activity
+            android:name=".ui.activities.BookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.BooksListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.Payment"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
     </application>

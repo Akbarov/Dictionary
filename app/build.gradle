@@ -98,6 +98,7 @@ dependencies {
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.github.kk121:File-Loader:1.2'
     compile 'com.aloj.progress:download-progress:1.0'
+    compile 'com.mindorks.android:prdownloader:0.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

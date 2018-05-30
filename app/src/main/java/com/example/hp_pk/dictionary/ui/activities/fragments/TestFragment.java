@@ -16,38 +16,34 @@ import com.example.hp_pk.dictionary.adapters.MyExpandableAdapter;
 import com.example.hp_pk.dictionary.classes.LevelGroup;
 import com.example.hp_pk.dictionary.database.DbManager;
 import com.example.hp_pk.dictionary.database.LessonItem;
-import com.example.hp_pk.dictionary.listeners.ItemClickListener;
+import com.example.hp_pk.dictionary.database.TestItem;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author Zohidjon
- * @since 2018, March 21
- */
+public class TestFragment extends Fragment {
 
-public class SubjectFragment extends Fragment {
-
+    private String category = "English";
     @Inject
     DbManager manager;
-    @BindView(R.id.expandable_list)
-    ExpandableListView expandableListView;
-    private String category;
-    private ItemClickListener itemClickListener;
+
     @BindView(R.id.loading)
     ProgressBar progressBar;
 
-    public static SubjectFragment newInstance(String category) {
-        SubjectFragment fragment = new SubjectFragment();
+    @BindView(R.id.expandable_list)
+    ExpandableListView expandableListView;
+
+    public static TestFragment newInstance(String category) {
         Bundle bundle = new Bundle();
         bundle.putString("category", category);
+        TestFragment fragment = new TestFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,29 +68,22 @@ public class SubjectFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<LessonItem> lessonItems = manager.getLessonItemsBySubject(category);
+        List<TestItem> testItems = manager.getTestItemBySubject(category);
         String level = "";
         List<LevelGroup> levelGroupList = new ArrayList<>();
         LevelGroup group = new LevelGroup();
-        String lessonName = "";
-        for (LessonItem item : lessonItems) {
-            String just = item.getLevel();
-            if (level.contains(just)) {
-                if (!lessonName.equals(item.getLesson()))
-                    group.addLesson(item.getLesson());
-                lessonName = item.getLesson();
+        for (TestItem item : testItems) {
+            if (level.equals(item.getLevel())) {
+                group.addLesson(item.getName());
             } else {
                 level = item.getLevel();
                 group = new LevelGroup();
-                group.setLevel(level);
+                group.setLevel(item.getLevel());
                 levelGroupList.add(group);
             }
         }
-        if (levelGroupList.size() > 0) {
-            progressBar.setVisibility(View.GONE);
-        }
         MyExpandableAdapter adapter = new MyExpandableAdapter(getContext(), levelGroupList);
         expandableListView.setAdapter(adapter);
-
+        progressBar.setVisibility(View.GONE);
     }
 }
