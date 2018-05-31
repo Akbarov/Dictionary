@@ -22,6 +22,12 @@ public class Utils {
         }
     }
 
+
+    public static boolean hasFile( String fileName) {
+        File file = new File(fileName);
+        return file.exists();
+    }
+
     public static String getProgressDisplayLine(long currentBytes, long totalBytes) {
         return getBytesToMBString(currentBytes) + "/" + getBytesToMBString(totalBytes);
     }

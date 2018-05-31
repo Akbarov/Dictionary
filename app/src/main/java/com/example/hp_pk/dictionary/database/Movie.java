@@ -1,10 +1,8 @@
 package com.example.hp_pk.dictionary.database;
 
-import com.google.gson.annotations.Expose;
-
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Index;
 
 /**
  * @auther ZOHIDJON

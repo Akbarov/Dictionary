@@ -52,8 +52,6 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
     public void updateBooksFromServer(String category) {
         this.category = category;
         if (!needToUpdate(category)) {
-            stateView.setUpPager();
-        } else {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference reference = database.getReference("My Center/" + category);
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,6 +77,8 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
                     stateView.getBookListCanceled(databaseError.getMessage());
                 }
             });
+        } else {
+            stateView.setUpPager();
         }
     }
 
@@ -142,16 +142,22 @@ public class MyTutorPresenter extends MvpPresenter<MyTutorView> {
     private void parsePhotos(DataSnapshot photoSnapshot) {
         for (DataSnapshot item : photoSnapshot.getChildren()) {
             Photo photo = item.getValue(Photo.class);
-            photo.setId(item.getKey());
-            manager.setPhoto(photo);
+            if (photo != null) {
+                photo.setId(item.getKey());
+                manager.setPhoto(photo);
+            }
         }
     }
 
     private void parseMovies(DataSnapshot moviesSnapshot) {
         for (DataSnapshot item : moviesSnapshot.getChildren()) {
             Movie movie = item.getValue(Movie.class);
-            movie.setId(item.getKey());
-            manager.setMovie(movie);
+            if (movie != null) {
+                movie.setId(item.getKey());
+                movie.setDownloadState(-1);
+
+                manager.setMovie(movie);
+            }
         }
     }
 

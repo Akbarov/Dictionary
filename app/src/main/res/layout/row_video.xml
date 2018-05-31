@@ -35,10 +35,27 @@
                 android:layout_height="match_parent">
 
                 <com.aloj.progress.DownloadProgressView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
                     android:id="@+id/download"
-                    android:layout_gravity="center" />
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <ImageView
+                    android:id="@+id/play"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:tint="@color/colorPrimary"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_play_circle_filled_black_24dp" />
+
+                <Button
+                    android:id="@+id/down"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Down" />
 
             </FrameLayout>
         </FrameLayout>
